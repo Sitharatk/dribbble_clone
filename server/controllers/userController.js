@@ -22,6 +22,7 @@ export const profileUpdate =async(req,res,next)=>{
 }
 
 
+
 // export const profileDelete =async(req,res,next)=>{
 //     const { id } = req.params;
 

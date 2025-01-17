@@ -11,4 +11,5 @@ userRouter
 .post('/user/:id/avatar',upload.single('avatar'),profileUpdate)
 
 
+
 export default userRouter

@@ -21,7 +21,7 @@ function UserDetails() {
         <div className='space-y-3'>
           <h1 className='font-bold text-2xl'>{authData.name}</h1>
           <p>{authData.email}</p>
-          <h1 className='font-bold text-2xl'>{authData.email}</h1>
+          {/* <h1 className='font-bold text-2xl'>{authData.email}</h1> */}
           <span className='space-x-2'>
             <button className='border py-3 px-5 rounded-full mt-2 font-semibold text-sm'>
               Edit Profile
