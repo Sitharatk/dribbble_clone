@@ -23,6 +23,7 @@ function Welcome() {
     if (avatar && location) {
       const formData = new FormData();
       formData.append('avatar', avatar);
+      formData.append('location', location); 
   
       try {
         const id = authData.id;
@@ -36,17 +37,18 @@ function Welcome() {
   
         const updatedUser = response.data.user;
         setAuthData((prevAuthData) => {
-          const updatedAuthData = { ...prevAuthData, profilePicture: updatedUser.profilePicture };
+          const updatedAuthData = {
+            ...prevAuthData,profilePicture: updatedUser.profilePicture,
+            location: updatedUser.location  };
           localStorage.setItem('authData', JSON.stringify(updatedAuthData));
           return updatedAuthData;
         });
         navigate('/welcomedesigner');
       } catch (error) {
-        console.error('Error uploading avatar:', error.response?.data || error);
+        console.error('Error updating profile:', error.response?.data || error);
       }
     }
   };
-  
   const handleRemoveAvatar = () => {
     setAvatar(""); 
   };

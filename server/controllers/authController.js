@@ -67,7 +67,7 @@ const createToken=(id)=>{
       res.status(200).json({
         token,
         refreshToken,
-        user: { id: user._id, name: user.name, email: user.email,  profilePicture: user.profilePicture ,
+        user: { id: user._id, name: user.name, email: user.email,  profilePicture: user.profilePicture ,location:user.location
         },
       });
     } catch (error) {

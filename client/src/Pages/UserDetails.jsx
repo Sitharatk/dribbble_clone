@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 function UserDetails() {
   const { authData } = useContext(AuthContext)
@@ -20,8 +20,8 @@ function UserDetails() {
         </div>
         <div className='space-y-3'>
           <h1 className='font-bold text-2xl'>{authData.name}</h1>
-          <p>{authData.email}</p>
-          {/* <h1 className='font-bold text-2xl'>{authData.email}</h1> */}
+          {/* <p>{authData.email}</p> */}
+          <h1 >{authData.location}</h1>
           <span className='space-x-2'>
             <button className='border py-3 px-5 rounded-full mt-2 font-semibold text-sm'>
               Edit Profile
@@ -33,7 +33,7 @@ function UserDetails() {
         </div>
       </div>
       <div className='flex space-x-10 py-12 px-24 font-semibold'>
-        {/* Apply background color only to the "Work" button if the current page is "userwork" */}
+    
         <Link to='/userwork'><button >Work</button></Link>
         
         <button>Services</button>
