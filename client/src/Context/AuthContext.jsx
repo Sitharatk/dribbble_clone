@@ -37,13 +37,14 @@ function AuthProvider({ children }) {
     }
   };
   
-  const logout = () => {
-  
+ 
+  const logout = (navigate) => {
     setAuthData(null);
     localStorage.removeItem('authData');
-    
+    if (navigate) {
+      navigate('/');
+    }
   };
-
   useEffect(() => {
  
     const storedData = localStorage.getItem('authData');

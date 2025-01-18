@@ -12,8 +12,8 @@ import {
   faBell,
   faEnvelope
 } from '@fortawesome/free-solid-svg-icons';
-import { Link ,useLocation} from 'react-router-dom';
-import { AuthContext } from './../Context/AuthContext';
+import { Link ,useLocation, useNavigate} from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 
 function Navbar() {
@@ -56,14 +56,52 @@ function Navbar() {
       }
     };
   }, [isProfileDropdownOpen]);
+  useEffect(() => {
+    let dropdownTimeout;
+  
+    if (isDropdownOpen) {
+      dropdownTimeout = setTimeout(() => {
+        setIsDropdownOpen(false);
+      }, 1500); 
+    }
+  
+    return () => {
+      if (dropdownTimeout) {
+        clearTimeout(dropdownTimeout);
+      }
+    };
+  }, [isDropdownOpen]);
+  
+  useEffect(() => {
+    let dropdownTimeout2;
+  
+    if (isDropdownOpen2) {
+      dropdownTimeout2 = setTimeout(() => {
+        setIsDropdownOpen2(false);
+      }, 1500); 
+    }
+  
+    return () => {
+      if (dropdownTimeout2) {
+        clearTimeout(dropdownTimeout2);
+      }
+    };
+  }, [isDropdownOpen2]);
+  
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   console.log('Auth Data:', authData);
 
   return (
     <nav
       className={`${
-        isScrolled ? 'fixed top-0 left-0 w-full z-50 ' : ''
-      } bg-white transition-all duration-300 ease-in-out`}
+        isScrolled ? 'fixed top-0 left-0 w-full z-50 ' : 'relative '
+      } bg-white  z-50 transition-all duration-300 ease-in-out`}
     >
       <div className="flex justify-between items-center py-6 px-9">
    
@@ -97,8 +135,7 @@ function Navbar() {
 >
   <div
     className="relative"
-    onMouseEnter={() => setIsDropdownOpen(true)}
-    onMouseLeave={() => setIsDropdownOpen(false)}
+    onClick={() =>setIsDropdownOpen((prev) => !prev)}
   >
     <button className="hover:text-gray-400 flex items-center font-semibold">
       Explore <FontAwesomeIcon icon={faAngleDown} className="text-xs ml-1" />
@@ -133,8 +170,7 @@ function Navbar() {
 
   <div
     className="relative"
-    onMouseEnter={() => setIsDropdownOpen2(true)}
-    onMouseLeave={() => setIsDropdownOpen2(false)}
+    onClick={() =>setIsDropdownOpen2((prev) => !prev)}
   >
     <button className="hover:text-gray-400 flex items-center font-semibold">
       Hire a Designer <FontAwesomeIcon icon={faAngleDown} className="text-xs ml-1" />
@@ -149,10 +185,10 @@ function Navbar() {
             <FontAwesomeIcon icon={faSearch} className="text-sm" />
             <span>Browse Designers</span>
           </li>
-          <li className="flex items-center space-x-2 font-semibold hover:text-gray-900 cursor-pointer">
+         <Link to='/submitbrief'><li className="flex items-center space-x-2 font-semibold hover:text-gray-900 cursor-pointer">
             <FontAwesomeIcon icon={faFilePen} />
             <span>Submit a Project Brief</span>
-          </li>
+          </li></Link>
           <li className="flex items-center space-x-2 font-semibold hover:text-gray-900 cursor-pointer">
             <FontAwesomeIcon icon={faFileLines} className="text-sm" />
             <span>Post a Job</span>
@@ -183,7 +219,7 @@ function Navbar() {
               </button>
              
               <div className="relative">
-               <img
+              <img
                   src={authData.profilePicture || ''} 
                   alt="User Profile"
                   className="w-11 h-11 ml-3 rounded-full object-cover border border-gray-300 cursor-pointer"
@@ -201,20 +237,20 @@ function Navbar() {
       </div>
       <p className="mt-2 font-bold text-gray-800">{authData.name}</p>
     </div>
-    <ul className="py-2">
+    <div className="py-2">
       <Link to="/userdetails">
         <li className="px-4 py-2 ml-5 cursor-pointer flex items-center">
           <span className="text-gray-700">Settings</span>
         </li>
       </Link>
       <hr className="my-2 border-gray-100" />
-      <li
-        className="px-4 py-2 ml-5 cursor-pointer flex items-center "
-        onClick={logout}
+      <button
+        className="px-4 py-2 ml-5 cursor-pointer z-10 flex items-center "
+        onClick={handleLogout}
       >
         Logout
-      </li>
-    </ul>
+      </button>
+    </div>
   </div>
 )}
 

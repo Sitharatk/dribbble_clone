@@ -10,6 +10,7 @@ import UserDetails from '../Pages/UserDetails'
 import UserAbout from '../Pages/UserAbout'
 import UserWork from '../Pages/UserWork'
 import EditProfile from '../Pages/EditProfile'
+import Submitbrief from '../Pages/Submitbrief'
 
 function AppRouters() {
   return (
@@ -18,6 +19,7 @@ function AppRouters() {
     <Routes>
         <Route element={  <MainLayout/>}>
         <Route path="/" element={<Home/>}/>
+      
         <Route path="/login" element={<Login/>}/>
         <Route path="/signup" element={<SIgnUP/>}/>
         <Route path='/get_started' element={<Welcome/>}/>
@@ -27,6 +29,7 @@ function AppRouters() {
         <Route path='/userabout' element={<UserAbout/>}/>
         <Route path='/userwork' element={<UserWork/>}/>
         <Route path='/editprofile' element={<EditProfile/>}/> 
+        <Route path='/submitbrief' element={<Submitbrief/>}/>
         </Route>
     </Routes>
 

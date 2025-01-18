@@ -18,16 +18,7 @@ function EditProfile() {
 
   const {authData,setAuthData }=useContext(AuthContext)
 
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     try {
-//       const response = await axios.put(`/api/users/${userId}/update`, formData);
-//       alert("Profile updated successfully!");
-//       console.log(response.data);
-//     } catch (error) {
-//       console.error("Error updating profile", error.response.data);
-//     }
-//   };
+
 
   return (
     <div className="edit-profile-container mt-28 max-w-3xl mx-auto bg-white rounded-lg p-10">
@@ -88,7 +79,16 @@ function EditProfile() {
 }
 
 export default EditProfile;
-
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     try {
+//       const response = await axios.put(`/api/users/${userId}/update`, formData);
+//       alert("Profile updated successfully!");
+//       console.log(response.data);
+//     } catch (error) {
+//       console.error("Error updating profile", error.response.data);
+//     }
+//   };
 {/* <div>
           <h3>Work History</h3>
           {formData.workHistory.map((job, index) => (
