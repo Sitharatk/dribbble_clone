@@ -167,7 +167,7 @@ function SIgnUP() {
                 className="w-5 h-5 text-pink-500"
               />
               <label htmlFor="terms" className="ml-3 text-gray-600 text-sm">
-                I agree with Dribbble's <span className="underline">Terms of Service</span> and{' '}
+                I agree with Dribbble&apos;s <span className="underline">Terms of Service</span> and{' '}
                 <span className="underline">Privacy Policy</span>.
               </label>
             </div>

@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { Link } from 'react-router-dom'
 
 function Submitbrief() {
@@ -20,13 +20,13 @@ function Submitbrief() {
               </p>
             </div>
             <div className='flex items-center space-x-3'>
-              <p className='rounded-full w-12 h-10 flex items-center justify-center bg-pink-500 text-white'>2</p>
+              <p className='rounded-full w-11 h-10 flex items-center justify-center bg-pink-500 text-white'>2</p>
               <p className='text-[16px]'>
                 <span className='font-semibold'>Review our recommendations</span> and request proposals from your favorite designers.
               </p>
             </div>
             <div className='flex items-center space-x-3'>
-              <p className='rounded-full w-12 h-10 flex items-center justify-center bg-pink-500 text-white'>3</p>
+              <p className='rounded-full w-14 h-10 flex items-center justify-center bg-pink-500 text-white'>3</p>
               <p className='text-[16px]'>
                 <span className='font-semibold'>Select your designer</span> and kick off your project on Dribbble, with secure payments and seamless collaboration.
               </p>
@@ -99,7 +99,7 @@ function Submitbrief() {
  
             <div>
               <label className='block text-gray-900 font-semibold'>Budget(USD)*</label>
-              <p className ='text-xs text-slate-600'>We'll connect you with a designer that fits your budget range.</p>
+              <p className ='text-xs text-slate-600'>We&apos;ll connect you with a designer that fits your budget range.</p>
               <select className='w-full p-2 border rounded-lg'>
                 <option value=' Select' disabled>Select....</option>
                 <option value='<$500'> $500</option>

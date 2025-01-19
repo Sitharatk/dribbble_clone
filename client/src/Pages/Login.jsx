@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react';
+import  { useContext, useState } from 'react';
 import google from '../assets/google.png';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../Context/AuthContext';	
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
@@ -110,7 +110,7 @@ if (!password.trim()) {
           </form>
 
           <p className="text-center mt-4 text-sm text-gray-500">
-            Don't have an account? <a href="/signup" className="text-black underline font-medium">Sign up</a>
+            Don&apos;t have an account? <a href="/signup" className="text-black underline font-medium">Sign up</a>
           </p>
         </div>
       </div>

@@ -6,6 +6,7 @@ import axios from 'axios';
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext();
 
+// eslint-disable-next-line react/prop-types
 function AuthProvider({ children }) {
   const [authData, setAuthData] = useState(() => {
  
@@ -16,7 +17,7 @@ function AuthProvider({ children }) {
   const login = async (email, password) => {
     const response = await axios.post('http://localhost:3000/auth/login', { email, password });
     const user = response.data.user;
-    const token = response.data.token;
+    // const token = response.data.token;
     setAuthData(user);
    
     localStorage.setItem('authData', JSON.stringify(user));
