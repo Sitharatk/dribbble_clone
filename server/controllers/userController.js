@@ -33,8 +33,7 @@ export const profileUpdate = async (req, res, next) => {
 export const updateExistingProfile = async (req, res) => {
   const { id } = req.params;
   const { name, location,bio } = req.body;
-  console.log("Request Body:", req.body);
-  console.log("Uploaded File:", req.file);
+
   
   try {
     let updateData = {
@@ -110,27 +109,4 @@ export const deleteAvatar = async (req, res) => {
     });
   }
 };
-
-// export const profileDelete =async(req,res,next)=>{
-//     const { id } = req.params;
-
-//     try {
-//       const user = await userModel.findByIdAndUpdate
-//       (
-//         id,
-//         { profilePicture: '' },
-//         { new: true }
-//       );
-
-//       if (!user) {
-//         return res.status(404).json({ message: 'User not found' });
-//       }
-
-//       res.status(200).json({ message: 'Avatar deleted successfully', user });
-
-//     } catch (error) {
-//       res.status(500).json({ message: 'Error deleting avatar', error: error.message });
-//     }
-
-// }
 
