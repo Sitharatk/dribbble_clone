@@ -189,10 +189,10 @@ function Navbar() {
             <FontAwesomeIcon icon={faFilePen} />
             <span>Submit a Project Brief</span>
           </li></Link>
-          <li className="flex items-center space-x-2 font-semibold hover:text-gray-900 cursor-pointer">
-            <FontAwesomeIcon icon={faFileLines} className="text-sm" />
+        
+           <Link to='/postjob'><li className="flex items-center space-x-2 font-semibold hover:text-gray-900 cursor-pointer"> <FontAwesomeIcon icon={faFileLines} className="text-sm" />
             <span>Post a Job</span>
-          </li>
+          </li></Link>
           <li className="flex items-center space-x-2 font-semibold hover:text-gray-900 cursor-pointer">
             <FontAwesomeIcon icon={faCircleInfo} className="text-base" />
             <span>Hiring on Dribbble</span>
