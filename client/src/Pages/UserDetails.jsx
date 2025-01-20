@@ -10,7 +10,7 @@ function UserDetails() {
   
   const navItems = [
     { name: 'Work', path: '/userwork' },
-    { name: 'Services'},
+    { name: 'Services',path: '/services' },
     { name: 'Boosted Shots' },
     { name: 'Collections' },
     { name: 'Liked Shots' },
@@ -55,7 +55,7 @@ function UserDetails() {
           </Link>
         ))}
       </div>
-      <div className="flex justify-center mb-20">
+      <div className="flex justify-center mb-14">
         <hr className="w-[1210px] border-t-1 border-gray-200" />
       </div>
     </div>

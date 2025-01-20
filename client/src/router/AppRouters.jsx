@@ -12,6 +12,8 @@ import UserWork from '../Pages/UserWork'
 import EditProfile from '../Pages/EditProfile'
 import Submitbrief from '../Pages/Submitbrief'
 import PostJob from '../Pages/PostJob'
+import Upload from '../Pages/Upload'
+import Services from '../Pages/Services'
 
 function AppRouters() {
   return (
@@ -32,6 +34,8 @@ function AppRouters() {
         <Route path='/editprofile' element={<EditProfile/>}/> 
         <Route path='/submitbrief' element={<Submitbrief/>}/>
         <Route path='/postjob' element={<PostJob/>}/>
+        <Route path='/uploads' element={<Upload/>}/>
+        <Route path='/services' element={<Services/>}/>
     
        
         </Route>

@@ -5,7 +5,7 @@ import { Outlet, useLocation } from 'react-router-dom'
 
 function MainLayout() {
     const location=useLocation()
-const hide=location.pathname==='/login' || location.pathname === '/signup' || location.pathname === '/get_started'|| location.pathname === '/welcomedesigner'
+const hide=location.pathname==='/login' || location.pathname === '/signup' || location.pathname === '/get_started'|| location.pathname === '/welcomedesigner' || location.pathname ==='/uploads'
   return (
     <>
    {!hide &&  <Navbar/>}
