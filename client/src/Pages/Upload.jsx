@@ -55,10 +55,10 @@ function Upload() {
     }
   
     // Optional: Add validation for file type/size if necessary
-    if (image && !['image/jpeg', 'image/png', 'image/gif'].includes(image.type)) {
-      setMessage('Please upload a valid image file (jpeg, png, gif).');
-      return;
-    }
+    // if (image && !['image/jpeg', 'image/png', 'image/gif'].includes(image.type)) {
+    //   setMessage('Please upload a valid image file (jpeg, png, gif).');
+    //   return;
+    // }
   
     const formData = new FormData();
     formData.append('title', title);
