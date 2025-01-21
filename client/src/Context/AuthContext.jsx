@@ -1,4 +1,4 @@
-import  { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
 
@@ -9,28 +9,32 @@ export const AuthContext = createContext();
 // eslint-disable-next-line react/prop-types
 function AuthProvider({ children }) {
   const [authData, setAuthData] = useState(() => {
- 
-    const storedData = localStorage.getItem('authData');
+    const storedData = localStorage.getItem('currentUser');
     return storedData ? JSON.parse(storedData) : null;
   });
+  
 
   const login = async (email, password) => {
     const response = await axios.post('http://localhost:3000/auth/login', { email, password });
     const user = response.data.user;
-    // const token = response.data.token;
-    setAuthData(user);
-   
-    localStorage.setItem('authData', JSON.stringify(user));
+    const token = response.data.token;
+  
+    // Store user and token in localStorage
+    localStorage.setItem('currentUser', JSON.stringify({ ...user, token }));
+    setAuthData({ ...user, token });
   };
+  
   
 
   const register = async (name, username, email, password) => {
     try {
       const response = await axios.post('http://localhost:3000/auth/signup', { name, username, email, password });
-  
-      const user = { id: response.data.id, name, email };
-      setAuthData(user);
-      localStorage.setItem('authData', JSON.stringify(user));
+  const user = { id: response.data.id, name, email };
+  const token = response.data.token;
+
+  // Store user and token in localStorage
+  localStorage.setItem('currentUser', JSON.stringify({ ...user, token }));
+  setAuthData({ ...user, token });
       console.log(user);
     } catch (error) {
       // Throw the error so it can be handled by handleSubmit
@@ -41,6 +45,7 @@ function AuthProvider({ children }) {
  
   const logout = (navigate) => {
     setAuthData(null);
+    localStorage.removeItem('token');
     localStorage.removeItem('authData');
     if (navigate) {
       navigate('/');

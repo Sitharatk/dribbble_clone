@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useRef, useContext } from "react";
 import { AuthContext } from "../Context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Upload() {
     const [image, setImage] = useState(null);
@@ -12,7 +13,7 @@ function Upload() {
     const [message,setMessage]=useState('');
     const fileInputRef = useRef(null);
     const {authData}=useContext(AuthContext);
-
+    const navigate = useNavigate();
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -45,7 +46,12 @@ function Upload() {
   const handleDragOver = (e) => {
     e.preventDefault();
   };
-
+  console.log('Auth state:', {
+    userId: authData?.id,
+    hasToken: !!authData?.token, // Check if the token exists
+  });
+  console.log('Stored auth data:', JSON.parse(localStorage.getItem('currentUser')));
+  
   const handlePublish = async (e) => {
     e.preventDefault();
   
@@ -54,25 +60,35 @@ function Upload() {
       return;
     }
   
-    // Optional: Add validation for file type/size if necessary
-    // if (image && !['image/jpeg', 'image/png', 'image/gif'].includes(image.type)) {
-    //   setMessage('Please upload a valid image file (jpeg, png, gif).');
-    //   return;
-    // }
-  
     const formData = new FormData();
     formData.append('title', title);
     formData.append('image', image);
     formData.append('tags', tags);
   
     try {
-        const userId = authData.id; 
-      const response = await axios.post( `http://localhost:3000/user/${userId}/shots`, formData);
+      const userId = authData.id; // Assuming this is where you get the user's ID
+      const token = authData.token; // Ensure token is available in the context
+  
+      // Add the token to the headers for authorization
+      const response = await axios.post(
+        `http://localhost:3000/auth/user/${userId}/shots`,
+        formData,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        }
+      );
+  
       setMessage('Shot uploaded successfully!');
       setTitle('');
       setImage(null);
       setPreview(null);
       setShowPublishModal(false);
+  
+      setTimeout(() => {
+        navigate('/userwork');
+      }, 1500);
     } catch (error) {
       console.error('Error uploading shot:', error);
       setMessage(error.response?.data?.message || 'Failed to upload the shot. Please try again.');

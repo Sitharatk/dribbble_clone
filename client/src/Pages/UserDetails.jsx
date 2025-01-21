@@ -1,11 +1,13 @@
-import { useContext} from 'react';
+import { useContext, useEffect, useState} from 'react';
 import { AuthContext } from '../Context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 import { Link, useLocation } from 'react-router-dom';
-
+ 
 function UserDetails() {
   const { authData } = useContext(AuthContext);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
   const location = useLocation();
   
   const navItems = [
@@ -17,6 +19,22 @@ function UserDetails() {
     { name: 'About', path: '/userabout' },
   ];
 
+useEffect(() => {
+    let dropdownTimeout;
+  
+    if (isDropdownOpen) {
+      dropdownTimeout = setTimeout(() => {
+        setIsDropdownOpen(false);
+      }, 1500); 
+    }
+  
+    return () => {
+      if (dropdownTimeout) {
+        clearTimeout(dropdownTimeout);
+      }
+    };
+  }, [isDropdownOpen]);
+  
   return (
     <div className="mt-32">
       <div className="flex items-center justify-center space-x-10 p-5">
@@ -36,9 +54,32 @@ function UserDetails() {
                 Edit Profile
               </button>
             </Link>
+            <span
+    className="relative"
+    onClick={() =>setIsDropdownOpen((prev) => !prev)}
+  >
             <button className="border py-2 px-3 rounded-full mt-2 font-semibold">
               <FontAwesomeIcon icon={faEllipsis} />
+
             </button>
+            {isDropdownOpen && (
+                  <div className="absolute left-0 top-full mt-4 p-2 w-60 text-sm bg-white  shadow-xl rounded-md z-10 border border-gray-200">
+                    <ul
+                      className="flex flex-col space-y-4 p-2 text-gray-500"
+                   >
+                      <li className=" hover:text-gray-600 cursor-pointer">
+             
+                     Add or remove from lists...
+                      </li>
+                      <Link to='/editprofile'><li className=" hover:text-gray-600 cursor-pointer">
+             
+          Edit your account settings
+           </li></Link>
+                    
+                    </ul>
+                  </div>
+                )}
+            </span>
           </span>
         </div>
       </div>

@@ -5,7 +5,7 @@ import connectDB from './config/db.js'
 import userRouter from './routes/authRouter.js'
 import { connectCloudinary } from './config/cloudinary.js'
 import errorHandler from './middleware/errorHandler.js'
-
+import cookieParser from 'cookie-parser'
 
 dotenv.config();
 connectDB();
@@ -15,7 +15,13 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors())
+
+app.use(cookieParser());
+app.use(cors({
+    origin:process.env.CLIENT_URL,
+    credentials:true,
+    allowedHeaders: ["Content-Type", "Authorization"]
+}))
 
 // Routes
 app.use('/auth',userRouter)

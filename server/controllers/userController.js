@@ -1,5 +1,5 @@
 import userModel from "../models/userModel.js";
-import cloudinary from "../Config/cloudinary.js";
+import cloudinary from "../config/cloudinary.js";
 
 export const profileUpdate = async (req, res, next) => {
   const { id } = req.params;

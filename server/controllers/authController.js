@@ -63,7 +63,13 @@ const createToken=(id)=>{
   
       const token = createToken(user._id);
       const refreshToken = createRefreshToken(user._id);
-  
+
+      res.cookie('refreshToken', refreshToken, {
+        httpOnly: true,
+        secure: true,  
+        sameSite: "none",
+      });
+
       res.status(200).json({
         token,
         refreshToken,
@@ -78,25 +84,27 @@ const createToken=(id)=>{
   
 
   export const logout = async (req, res, next) => {
+    res.clearCookie('refreshToken');
+
     res.status(200).json({ message: 'Logout successful' });
   };  
   
-//   export const refreshAccessToken = async (req, res, next) => {
-//     const { refreshToken } = req.body;
+  export const refreshAccessToken = async (req, res, next) => {
+    const refreshToken = req.cookies?.refreshToken;
   
-//     if (!refreshToken) {
-//       return next(new CustomError('Refresh token is required', 400));
-//     }
+    if (!refreshToken) {
+      return next(new CustomError('Refresh token is required', 400));
+    }
   
-//     try {
-//       const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN);
+    try {
+      const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN);
   
-//       const newToken = createToken(decoded.id);
+      const newToken = createToken(decoded.id);
   
-//       res.status(200).json({ token: newToken });
-//     } catch (error) {
-//       console.error('Error in refreshAccessToken:', error.message, error.stack);
-//       next(new CustomError('Invalid or expired refresh token', 401));
-//     }
-//   };
+      res.status(200).json({  message: "Token refreshed",token: newToken });
+    } catch (error) {
+      console.error('Error in refreshAccessToken:', error.message, error.stack);
+      next(new CustomError('Invalid or expired refresh token', 401));
+    }
+  };
   
