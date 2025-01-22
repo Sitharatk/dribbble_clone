@@ -15,7 +15,7 @@ userRouter
 .put('/user/:id/profile', upload.single('avatar'), updateExistingProfile)
 .delete('/user/:id/avatar', deleteAvatar)
 .post('/user/:id/shots', verifyToken,upload.single('image'), uploadShot)
-.get('/user/:id/shots',verifyToken, getShots)	
+.get('/shots',verifyToken, getShots)	
 
 
 

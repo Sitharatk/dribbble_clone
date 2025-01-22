@@ -3,7 +3,6 @@ import cloudinary from "../config/cloudinary.js";
 
 
 export const uploadShot = async (req, res) => {
-
     if (!req.user) {
         return res.status(401).json({ message: 'Authentication required' });
     }
@@ -16,20 +15,23 @@ export const uploadShot = async (req, res) => {
         return res.status(400).json({ message: 'Title is required' });
     }
 
-    const shotData = {
-        title,
-        tags: tags ? tags.split(',').map(tag => tag.trim()) : [],
-        user: req.user._id, // Ensure the shot is linked to the logged-in user
-    };
+    // Validate if image file exists
+    if (!req.file) {
+        return res.status(400).json({ message: 'Image is required' });
+    }
 
     try {
-        // Handle image upload if a file is provided
-        if (req.file) {
-            const result = await cloudinary.uploader.upload(req.file.path, {
-                folder: 'dribbble/shots',
-            });
-            shotData.image = result.secure_url; // Store the secure URL from Cloudinary
-        }
+        // Handle image upload first
+        const result = await cloudinary.uploader.upload(req.file.path, {
+            folder: 'dribbble/shots',
+        });
+
+        const shotData = {
+            title,
+            tags: tags ? tags.split(',').map(tag => tag.trim()) : [],
+            user: req.user.id, // Changed from req.user._id to req.user.id
+            image: result.secure_url // Add image URL from Cloudinary
+        };
 
         // Create a new shot with the user data attached
         const newShot = await shotModel.create(shotData);
@@ -47,9 +49,10 @@ export const uploadShot = async (req, res) => {
     }
 };
 
+
 export const getShots = async (req, res) => {
     try {
-        const shots = await shotModel.find({ user: req.user._id }); // Fetch shots for the logged-in user
+        const shots = await shotModel.find({ user: req.user.id }); // Fetch shots for the logged-in user
         res.status(200).json({ shots });
     } catch (error) {
         console.error('Error fetching shots:', error);
