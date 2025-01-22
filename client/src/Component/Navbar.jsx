@@ -217,7 +217,9 @@ function Navbar() {
                 <FontAwesomeIcon icon={faBell} className="text-gray-800 text-xl" />
                 <span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
               </button>
-             
+             {/* <Link to='/uploads'><button className='border rounded-full font-medium ml-2 w-32 h-14 flex items-center justify-center '>
+  Share Work
+</button></Link>  */}
               <div className="relative">
               <img
                   src={authData.profilePicture || ''} 

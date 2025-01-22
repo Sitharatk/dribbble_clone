@@ -5,7 +5,7 @@ export const profileUpdate = async (req, res, next) => {
   const { id } = req.params;
   const { location } = req.body;
 
-  try {
+  try {                                         
     const updateData = {};
   if (req.file) {
       updateData.profilePicture = req.file.path;
