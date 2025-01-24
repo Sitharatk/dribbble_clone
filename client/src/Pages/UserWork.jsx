@@ -6,7 +6,7 @@ import { ShotContext } from '../Context/ShotContext';
 function UserWork() {
 
  const {shots, loading} = useContext(ShotContext);
-
+console.log(shots)
   return (
     <>
       <UserDetails />

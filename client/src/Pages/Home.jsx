@@ -1,11 +1,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { faSearch, faAngleDown,faFilter } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { ShotContext } from '../Context/ShotContext';
+import Card from './Card';
 
 function Home() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   // const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const {allShots} =useContext(ShotContext)
+  console.log(allShots)
 
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
@@ -90,17 +94,12 @@ function Home() {
         </div>
 
       </div>
-      <div>
-        fgh
-      </div>
-      <div>
-        fgh
-      </div>
-      <div>
-        fgh
-      </div>
-      <div>
-        fgh
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mt-12 px-10 ">
+        {allShots.length > 0 ? (
+          allShots.map((shot) => <Card key={shot.id} shot={shot} className="w-56 h-56" />)
+        ) : (
+          <p>No shots found </p>
+        )}
       </div>
     </div>
   );

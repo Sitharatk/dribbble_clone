@@ -69,8 +69,14 @@ export const getShots = async (req, res) => {
 
 export const getAllShots = async (req, res) => {
     try {
-        const shots = await shotModel.find();
+        const shots = await shotModel.find()
+        .populate({
+            path: 'user',
+            select: 'name username profilePicture', // Only select the fields you need
+          });
+      
         res.status(200).json({ shots });
+    
     } catch (error) {
         console.error('Error fetching shots:', error);
         res.status(500).json({

@@ -8,34 +8,34 @@ export const ShotContext = createContext();
 // eslint-disable-next-line react/prop-types
 function ShotProvider({ children }) {
   const [shots, setShots] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const { authData } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
+  const { authData } = useContext(AuthContext);
+const [allShots, setAllShots] = useState([]);
+
 
     useEffect(() => {
-        const fetchShots = async () => {
-          try {
-            const response = await axios.get(`http://localhost:3000/post/shots`, {
-              headers: {
-                Authorization: `Bearer ${authData?.token}`,
-              },
-            });
-       
-            setShots(response.data.shots);
-           
-          } catch (error) {
-            console.error("Error fetching shots:", error);
-          } finally {
-            setLoading(false);
-          }
-        };
-
-        if (authData?.token) {
-          fetchShots();
-        } else {
+      const fetchShots = async () => {
+        try {
+          const response = await axios.get(`http://localhost:3000/post/shots/${authData?.id}`, {
+            headers: {
+              Authorization: `Bearer ${authData?.token}`, // Send token for authorization
+            },
+          });
+          setShots(response.data.shots); // Store the fetched posts
+        } catch (error) {
+          console.error("Error fetching shots:", error);
+        } finally {
           setLoading(false);
         }
-      }, [authData]);
-
+      };
+    
+      if (authData?.id) {
+        fetchShots(); // Fetch posts for the specific user
+      } else {
+        setLoading(false);
+      }
+    }, [authData]); // Re-run when authData changes
+    
       const deleteShot = async (id) => {
         try {
           const response = await axios.delete(`http://localhost:3000/post/shots/${id}`, {
@@ -88,8 +88,22 @@ function ShotProvider({ children }) {
         }
       };
 
+      useEffect(() => {
+        const fetchAllShots = async () => {
+          try {
+            const response = await axios.get('http://localhost:3000/post/shots');
+            setAllShots(response.data.shots);
+            console.log('Fetched all shots:', response.data);
+          } catch (error) {
+            console.error('Error fetching all shots:', error);
+          }
+        };
+    
+        fetchAllShots();
+      }, []);
+
     return (
-        <ShotContext.Provider value={{ shots,loading,deleteShot,updateShot}}>
+        <ShotContext.Provider value={{ shots,loading,deleteShot,updateShot,allShots}}>
           {children}
         </ShotContext.Provider>
       );
