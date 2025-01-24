@@ -13,7 +13,8 @@ import {
   faEnvelope
 } from '@fortawesome/free-solid-svg-icons';
 import { Link ,useLocation, useNavigate} from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../Context/AuthContext';
+import { ShotContext } from '../Context/ShotContext';
 
 
 function Navbar() {
@@ -22,6 +23,7 @@ function Navbar() {
   const [isDropdownOpen2, setIsDropdownOpen2] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const {shots} = useContext(ShotContext);
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
@@ -100,8 +102,8 @@ function Navbar() {
   return (
     <nav
       className={`${
-        isScrolled ? 'fixed top-0 left-0 w-full z-50 ' : 'relative '
-      } bg-white  z-50 transition-all duration-300 ease-in-out`}
+        isScrolled ? 'fixed top-0 left-0 w-full z-40 ' : 'relative '
+      } bg-white  z-40 transition-all duration-300 ease-in-out`}
     >
       <div className="flex justify-between items-center py-6 px-9">
    
@@ -217,9 +219,14 @@ function Navbar() {
                 <FontAwesomeIcon icon={faBell} className="text-gray-800 text-xl" />
                 <span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
               </button>
-             {/* <Link to='/uploads'><button className='border rounded-full font-medium ml-2 w-32 h-14 flex items-center justify-center '>
-  Share Work
-</button></Link>  */}
+              {shots.length > 0 && (
+  <Link to='/uploads'>
+    <button className='border rounded-full font-medium ml-2 w-32 h-14 flex items-center justify-center'>
+      Share Work
+    </button>
+  </Link>
+)}
+
               <div className="relative">
               <img
                   src={authData.profilePicture || ''} 
@@ -240,7 +247,7 @@ function Navbar() {
       <p className="mt-2 font-bold text-gray-800">{authData.name}</p>
     </div>
     <div className="py-2">
-      <Link to="/userdetails">
+      <Link to="/userwork">
         <li className="px-4 py-2 ml-5 cursor-pointer flex items-center">
           <span className="text-gray-700">Settings</span>
         </li>

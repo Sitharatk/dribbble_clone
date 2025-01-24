@@ -15,6 +15,8 @@ import PostJob from '../Pages/PostJob'
 import Upload from '../Pages/Upload'
 import Services from '../Pages/Services'
 import Hiring from '../Pages/Hiring'
+import EditShot from '../Pages/EditShot'
+
 
 function AppRouters() {
   return (
@@ -28,7 +30,6 @@ function AppRouters() {
         <Route path="/signup" element={<SIgnUP/>}/>
         <Route path='/get_started' element={<Welcome/>}/>
         <Route path='/welcomedesigner' element={<WelcomeHIring/>}/>
-        <Route path='/shots' element={<Shots/>}/>
        <Route path='/userdetails' element={<UserDetails/>}/>
         <Route path='/userabout' element={<UserAbout/>}/>
         <Route path='/userwork' element={<UserWork/>}/>
@@ -38,6 +39,8 @@ function AppRouters() {
         <Route path='/uploads' element={<Upload/>}/>
         <Route path='/services' element={<Services/>}/>
         <Route path='/hiring' element={<Hiring/>}/>
+        <Route path='/shots/:id' element={<Shots/>}/>
+        <Route path ='/editshot/:id' element={<EditShot/>}/>
     
        
         </Route>

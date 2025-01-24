@@ -218,6 +218,14 @@ function Upload() {
               alt="Preview"
               className="max-w-full h-auto rounded-lg shadow-lg"
             />
+ <div className="mr-14 flex items-center justify-center">
+      <hr className="flex-1 border-t-2 border-gray-300 mt-14" />
+      <span className="mx-4  mt-14">
+        <button className="w-40 h-12 border border-gray-300 rounded-xl text-black"> <span className="text-black text-bold text-2xl mr-2">+</span>Insert Block</button>
+      </span>
+      <hr className="flex-1 border-t-2 border-gray-300 mt-14" />
+    </div>
+
           </div>
         ) : (
           <>

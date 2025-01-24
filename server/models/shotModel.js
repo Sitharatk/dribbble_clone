@@ -6,7 +6,11 @@ const shotSchema = new mongoose.Schema({
     image: { type: String, required: true },
     tags: [{ type: String }], 
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    likes: {type: [mongoose.Schema.Types.ObjectId],default: 0, },
+    likes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        default: []
+      }],
     views: { type: Number, default: 0 },
     comments: [{
         user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },

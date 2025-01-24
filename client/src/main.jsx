@@ -4,18 +4,18 @@ import './index.css'
 import App from './App.jsx'
 import {BrowserRouter} from 'react-router-dom'
 import AuthProvider from './Context/AuthContext.jsx'
-// import ShopProvider from './Context/ShotContext.jsx'
+import ShopProvider from './Context/ShotContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     
     <BrowserRouter>
       <AuthProvider>
-   
+      <ShopProvider>
   
     <App />
  
-
+    </ShopProvider>
     </AuthProvider>
     </BrowserRouter>
   </StrictMode>,

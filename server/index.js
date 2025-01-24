@@ -6,6 +6,7 @@ import userRouter from './routes/authRouter.js'
 import { connectCloudinary } from './config/cloudinary.js'
 import errorHandler from './middleware/errorHandler.js'
 import cookieParser from 'cookie-parser'
+import shotRouter from './routes/shotRouter.js'
 
 dotenv.config();
 connectDB();
@@ -25,6 +26,7 @@ app.use(cors({
 
 // Routes
 app.use('/auth',userRouter)
+app.use('/post',shotRouter)
 app.use(errorHandler)
 // Start Server
 const PORT = process.env.PORT || 3000;

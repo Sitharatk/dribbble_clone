@@ -1,36 +1,11 @@
 import { Link } from 'react-router-dom';
 import UserDetails from './UserDetails';
-import { useState, useEffect, useContext } from 'react';
-import { AuthContext } from '../Context/AuthContext';
-import axios from 'axios';
+import {  useContext } from 'react';
+import { ShotContext } from '../Context/ShotContext';
 
 function UserWork() {
-  const [shots, setShots] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const { authData } = useContext(AuthContext);
 
-  useEffect(() => {
-    const fetchShots = async () => {
-      try {
-        const response = await axios.get(`http://localhost:3000/auth/shots`, {  // Simplified URL
-          headers: {
-            Authorization: `Bearer ${authData.token}`,
-          },
-        });
-        setShots(response.data.shots);  // Access the shots array from the response
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching shots:', error);
-        setLoading(false);
-      }
-    };
-
-    if (authData?.token) {
-      fetchShots();
-    } else {
-      setLoading(false);
-    }
-  }, [authData]);
+ const {shots, loading} = useContext(ShotContext);
 
   return (
     <>
@@ -44,7 +19,7 @@ function UserWork() {
         {shots.map((shot) => (
             <div key={shot._id} className="flex flex-col">
                 {/* Image Container */}
-                <div className="group relative bg-white rounded-lg shadow-md overflow-hidden ">
+              <Link to=  {`/shots/${shot._id}`}> <div className="group relative bg-white rounded-lg shadow-md overflow-hidden ">
                     <div className="relative">
                         <img 
                             src={shot.image} 
@@ -67,7 +42,7 @@ function UserWork() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div></Link>
 
                 {/* Stats Container */}
                 <div className="flex items-center justify-between bg-white rounded-lg  p-3">
@@ -128,106 +103,3 @@ function UserWork() {
 
 export default UserWork;
 
-
-// import axios from 'axios';
-// import UserDetails from './UserDetails'
-// import { useState } from 'react';
-
-// function UserWork() {
-//   const [title, setTitle] = useState('');
-//   const [description, setDescription] = useState('');
-//   const [tags, setTags] = useState('');
-//   const [image, setImage] = useState(null);
-//   const [message, setMessage] = useState('');
-
-//   const handleUpload = async (e) => {
-//     e.preventDefault();
-
-//     if (!title || !description || !image) {
-//       setMessage('Please fill in all required fields.');
-//       return;
-//     }
-
-//     const formData = new FormData();
-//     formData.append('title', title);
-//     formData.append('description', description);
-//     formData.append('tags', tags);
-//     formData.append('image', image);
-
-//     try {
-//       const response = await axios.post('/api/shots', formData, {
-//         headers: {
-//           'Content-Type': 'multipart/form-data',
-//         },
-//       });
-//       setMessage('Shot uploaded successfully!');
-//       setTitle('');
-//       setDescription('');
-//       setTags('');
-//       setImage(null);
-//     } catch (error) {
-//       setMessage('Failed to upload the shot. Please try again.');
-//     }
-//   };
-
-//   return (
- 
-//     <>
-//     <UserDetails/>
-//     <div className="upload-shot-container">
-//       <h1>Upload your first shot</h1>
-//       <p>Show off your best work. Get feedback, likes, and be a part of a growing community.</p>
-
-//       <form onSubmit={handleUpload}>
-//         <div>
-//           <label>Title:</label>
-//           <input
-//             type="text"
-//             value={title}
-//             onChange={(e) => setTitle(e.target.value)}
-//             placeholder="Enter shot title"
-//             required
-//           />
-//         </div>
-
-//         <div>
-//           <label>Description:</label>
-//           <textarea
-//             value={description}
-//             onChange={(e) => setDescription(e.target.value)}
-//             placeholder="Enter shot description"
-//             required
-//           />
-//         </div>
-
-//         <div>
-//           <label>Tags (comma-separated):</label>
-//           <input
-//             type="text"
-//             value={tags}
-//             onChange={(e) => setTags(e.target.value)}
-//             placeholder="Enter tags"
-//           />
-//         </div>
-
-//         <div>
-//           <label>Upload Image:</label>
-//           <input
-//             type="file"
-//             accept="image/*"
-//             onChange={(e) => setImage(e.target.files[0])}
-//             required
-//           />
-//         </div>
-
-//         <button type="submit">Upload your first shot</button>
-//       </form>
-
-//       {message && <p>{message}</p>}
-//     </div>
-  
-// </>
-//   )
-// }
-
-// export default UserWork

@@ -52,7 +52,11 @@ export const uploadShot = async (req, res) => {
 
 export const getShots = async (req, res) => {
     try {
-        const shots = await shotModel.find({ user: req.user.id }); // Fetch shots for the logged-in user
+        const shots = await shotModel.find({ user: req.user.id })
+        .populate({
+            path: 'user',
+            select: 'name username profilePicture', // Only select the fields you need
+          }); // Fetch shots for the logged-in user
         res.status(200).json({ shots });
     } catch (error) {
         console.error('Error fetching shots:', error);
@@ -75,6 +79,8 @@ export const getAllShots = async (req, res) => {
         });
     }
 }
+
+
 export const deleteShot = async (req, res) => {
     const { id } = req.params;
 
@@ -96,26 +102,45 @@ export const deleteShot = async (req, res) => {
 export const updateShot = async (req, res) => {
     const { id } = req.params;
     const { title, tags } = req.body;
-
+  
     try {
-        const updatedShot = await shotModel.findByIdAndUpdate(
-            id,
-            { title, tags },
-            { new: true }
-        );
-        if (!updatedShot) {
-            return res.status(404).json({ message: 'Shot not found' });
-        }
-        res.status(200).json({ message: 'Shot updated successfully', shot: updatedShot });
-    } catch (error) {
-        console.error('Error updating shot:', error);
-        res.status(500).json({  
-            message: 'Error updating shot',
-            error: error.message,
+      // Log to check incoming data
+      console.log('Request Body:', req.body);
+      
+      const updateData = {
+        title,
+        // Safely parse tags, ensure that they are being sent as a string
+        tags: tags ? JSON.parse(tags) : [] 
+      };
+  
+      if (req.file) {
+        const result = await cloudinary.uploader.upload(req.file.path, {
+          folder: 'dribbble/shots'
         });
+        updateData.image = result.secure_url;
+      }
+  
+      const updatedShot = await shotModel.findByIdAndUpdate(
+        id,
+        { $set: updateData },
+        { new: true }
+      );
+      
+      console.log("Updated shot from DB:", updatedShot);
+      if (!updatedShot) {
+        return res.status(404).json({ message: 'Shot not found' });
+      }
+  
+      res.status(200).json({ message: 'Shot updated successfully', shot: updatedShot });
+    } catch (error) {
+      console.error('Error updating shot:', error);
+      res.status(500).json({
+        message: 'Error updating shot',
+        error: error.message,
+      });
     }
-}
-
+  };
+  
 export const likeShot = async (req, res) => {
     const { shotId } = req.params;
 

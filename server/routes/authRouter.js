@@ -2,7 +2,7 @@ import express from 'express'
 import { loginUser, refreshAccessToken, registerUser } from '../controllers/authController.js'
 import { profileUpdate, updateExistingProfile, deleteAvatar} from '../controllers/userController.js'
 import upload from '../middleware/multer.js'
-import { getShots, uploadShot } from '../controllers/shotController.js'
+import { deleteShot, getShots, uploadShot } from '../controllers/shotController.js'
 import { verifyToken } from '../middleware/verifyToken.js'
 
 
@@ -15,7 +15,8 @@ userRouter
 .put('/user/:id/profile', upload.single('avatar'), updateExistingProfile)
 .delete('/user/:id/avatar', deleteAvatar)
 .post('/user/:id/shots', verifyToken,upload.single('image'), uploadShot)
-.get('/shots',verifyToken, getShots)	
+.get('/shots',verifyToken, getShots)
+.delete('/shots/:id', verifyToken, deleteShot)	
 
 
 
