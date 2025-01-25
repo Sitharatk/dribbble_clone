@@ -4,11 +4,13 @@ import { faSearch, faAngleDown,faFilter } from '@fortawesome/free-solid-svg-icon
 import { useContext, useState } from 'react';
 import { ShotContext } from '../Context/ShotContext';
 import Card from './Card';
+import { AuthContext } from '../Context/AuthContext';
 
 function Home() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   // const [isFilterOpen, setIsFilterOpen] = useState(false);
   const {allShots} =useContext(ShotContext)
+  const {authData}=useContext(AuthContext)
   console.log(allShots)
 
   const toggleDropdown = () => {
@@ -18,7 +20,8 @@ function Home() {
   // const toggleFilter = () => {
   //   setIsFilterOpen((prev) => !prev);
   // };
-  
+  const filteredShots = authData ? allShots.filter(shot => shot.userId !== authData.id) : allShots;
+
   return (
     <div className="w-full h-auto flex flex-col items-center justify-center  py-10 space-y-6 relative">
       <h1 className="font-serif text-[63px] font-normal leading-tight text-center">
@@ -44,57 +47,62 @@ function Home() {
           <FontAwesomeIcon icon={faSearch} className="text-lg" />
         </button>
       </div>
-      <div  className='flex gap-2 '>
-        <p className='  text-slate-400 text-[16px] mr-3'>Trending searches</p>
-        <button className=' rounded-full bg-gray-100 px-4 text-slate-800 text-[14.3px]'>landing page</button>
-        <button className=' rounded-full bg-gray-100 px-4 text-slate-800 text-[14.3px]'>e-commerce</button>
-        <button className=' rounded-full bg-gray-100 px-4 text-slate-800 text-[14.3px]'>mobile app</button>
-        <button className=' rounded-full bg-gray-100 px-4 text-slate-800 text-[14.3px]'>logo design</button>
-        <button className=' rounded-full bg-gray-100 px-4 text-slate-800 text-[14.3px]'>dashboard</button>
-        <button className=' rounded-full bg-gray-100 px-4 text-slate-800 text-[14.3px]'>icons</button>
-      </div>
+      <div className='flex flex-wrap gap-2'>
+  <p className='text-slate-400 text-[16px] mr-3 w-full sm:w-auto'>Trending searches</p>
+  <button className='rounded-full bg-gray-100 px-4 text-slate-800 text-[14.3px]'>landing page</button>
+  <button className='rounded-full bg-gray-100 px-4 text-slate-800 text-[14.3px]'>e-commerce</button>
+  <button className='rounded-full bg-gray-100 px-4 text-slate-800 text-[14.3px]'>mobile app</button>
+  <button className='rounded-full bg-gray-100 px-4 text-slate-800 text-[14.3px]'>logo design</button>
+  <button className='rounded-full bg-gray-100 px-4 text-slate-800 text-[14.3px]'>dashboard</button>
+  <button className='rounded-full bg-gray-100 px-4 text-slate-800 text-[14.3px]'>icons</button>
+</div>
+
       <div className='h-10'></div>
-      <div className='flex space-x-28 '>
-      <div className="relative">
-
-      <button onClick={toggleDropdown} className="w-32 h-10 border border-gray-200 rounded-lg text-[16px] font-medium bg-white text-gray-700">
-    Following <FontAwesomeIcon icon={faAngleDown} className="text-xs ml-1" />
-  </button>
-      {isDropdownOpen && (
-        <div className="absolute left-0 top-ful mt-2 w-44 bg-white shadow-xl rounded-md z-10 border border-gray-200">
-          <ul className="flex flex-col space-y-2 p-3 font-semibold text-gray-700">
-            <li
-              className="text-gray-500 text-sm cursor-pointer px-2 py-1 rounded-md hover:bg-gray-100 hover:text-gray-900">
-              Following
-            </li>
-            <li
-              className="text-gray-500 text-sm cursor-pointer px-2 py-1 rounded-md hover:bg-gray-100 hover:text-gray-900" >
-              Popular
-            </li>
-            <li
-              className="text-gray-500 text-sm cursor-pointer px-2 py-1 rounded-md hover:bg-gray-100 hover:text-gray-900"  >
-              New & Noteworthy
-           </li>
-          </ul>
-        </div>
-      )}
-    </div>
-        <div className='space-x-6 mt-2 text-[15px]'>
-          <button className='font-semibold'>Discover</button>
-          <button className='font-semibold'>Animation</button>
-          <button className='font-semibold'>Branding</button>
-          <button className='font-semibold'>Illustration</button>
-          <button className='font-semibold'>Mobile</button>
-          <button className='font-semibold'>Product Design</button>
-          <button className='font-semibold'>Typography</button>
-          <button className='font-semibold'>Web Design</button>
-        </div>
-        <div>
-          <button className='border rounded-full px-6 py-2 space-x-2 mb-9'><FontAwesomeIcon icon={faFilter} className='text-slate-400' /><span>Filters</span></button>
-        </div>
-
+      <div className="flex flex-wrap justify-between space-y-4 lg:space-x-28 items-center">
+  <div className="relative">
+    <button
+      onClick={toggleDropdown}
+      className="w-32 h-10 border border-gray-200 rounded-lg text-[16px] font-medium bg-white text-gray-700"
+    >
+      Following <FontAwesomeIcon icon={faAngleDown} className="text-xs ml-1" />
+    </button>
+    {isDropdownOpen && (
+      <div className="absolute left-0 top-full mt-2 w-44 bg-white shadow-xl rounded-md z-10 border border-gray-200">
+        <ul className="flex flex-col space-y-2 p-3 font-semibold text-gray-700">
+          <li className="text-gray-500 text-sm cursor-pointer px-2 py-1 rounded-md hover:bg-gray-100 hover:text-gray-900">
+            Following
+          </li>
+          <li className="text-gray-500 text-sm cursor-pointer px-2 py-1 rounded-md hover:bg-gray-100 hover:text-gray-900">
+            Popular
+          </li>
+          <li className="text-gray-500 text-sm cursor-pointer px-2 py-1 rounded-md hover:bg-gray-100 hover:text-gray-900">
+            New & Noteworthy
+          </li>
+        </ul>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mt-12 px-10 ">
+    )}
+  </div>
+
+  <div className="flex flex-wrap space-x-3 mt-2 text-[15px]">
+    <button className="font-semibold">Discover</button>
+    <button className="font-semibold">Animation</button>
+    <button className="font-semibold">Branding</button>
+    <button className="font-semibold">Illustration</button>
+    <button className="font-semibold">Mobile</button>
+    <button className="font-semibold">Product Design</button>
+    <button className="font-semibold">Typography</button>
+    <button className="font-semibold">Web Design</button>
+  </div>
+
+  <div>
+    <button className="border rounded-full px-6 py-2 flex items-center space-x-2">
+      <FontAwesomeIcon icon={faFilter} className="text-slate-400" />
+      <span>Filters</span>
+    </button>
+  </div>
+</div>
+
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 mt-20 px-10 ">
         {allShots.length > 0 ? (
           allShots.map((shot) => <Card key={shot.id} shot={shot} className="w-56 h-56" />)
         ) : (

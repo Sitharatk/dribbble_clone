@@ -72,7 +72,7 @@ export const getAllShots = async (req, res) => {
         const shots = await shotModel.find()
         .populate({
             path: 'user',
-            select: 'name username profilePicture', // Only select the fields you need
+            select: 'name username profilePicture ', // Only select the fields you need
           });
       
         res.status(200).json({ shots });

@@ -221,9 +221,10 @@ function Navbar() {
               </button>
               {shots.length > 0 && (
   <Link to='/uploads'>
-    <button className='border rounded-full font-medium ml-2 w-32 h-14 flex items-center justify-center'>
-      Share Work
-    </button>
+  <button className="sm:border sm:rounded-full sm:font-medium sm:ml-2 sm:w-32 sm:14 sm:flex sm:items-center sm:justify-center sm:py-3 hidden">
+  Share Work
+</button>
+
   </Link>
 )}
 
