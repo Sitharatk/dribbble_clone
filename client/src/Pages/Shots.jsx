@@ -165,8 +165,9 @@ const ShotDetail = () => {
    </button>
  </div>
 )}
-<div>
+<div>{!currentUserShot && 
         <p className="font-bold">More by {shot.user.name}</p>
+}
       </div>
       </div>
       

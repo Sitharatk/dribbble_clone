@@ -2,13 +2,23 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 function Card({shot}) {
+  const handleLinkClick = (e) => {
+   
+    if (  !e.target.closest('button') && 
+        !e.target.closest('svg')) {
+      return true;
+    }
+    e.preventDefault();
+  };
+
+
   return (
-    <Link to=  {`/shots/${shot._id}`}> <div className="w-full max-w-md mx-auto">
+    <div className="w-full max-w-md mx-auto">
       <div className="flex flex-col space-y-4">
         {/* Image Container */}
-        <div className="group relative bg-white rounded-lg shadow-md overflow-hidden">
+        <Link to=  {`/shots/${shot._id}`} onClick={handleLinkClick} >  <div className="group relative bg-white rounded-lg shadow-md overflow-hidden">
           <div className="relative">
-            <img
+          <img
               src={shot.image}
               alt={shot.title}
               className="w-full h-48 md:h-56 object-cover"
@@ -23,8 +33,8 @@ function Card({shot}) {
                 </h3>
 
                 {/* Action Buttons */}
-                <div className="flex space-x-2">
-                  <button className="p-2 rounded-full bg-white text-gray-600 hover:bg-opacity-90 transition-colors duration-200">
+                <div  className="flex space-x-2">
+                  <button   className="p-2 rounded-full bg-white text-gray-600 hover:bg-opacity-90 transition-colors duration-200">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-4 w-4 md:h-5 md:w-5"
@@ -42,7 +52,7 @@ function Card({shot}) {
                     </svg>
                   </button>
 
-                  <button className="p-2 rounded-full bg-white text-gray-600 hover:bg-opacity-30 transition-colors duration-200">
+                  <button  className="p-2 rounded-full bg-white text-gray-600 hover:bg-opacity-30 transition-colors duration-200">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-4 w-4 md:h-5 md:w-5"
@@ -64,7 +74,7 @@ function Card({shot}) {
             </div>
           </div>
         </div>
-
+        </Link>
         {/* Stats Container */}
         <div className="flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
           {/* User Info */}
@@ -143,7 +153,7 @@ function Card({shot}) {
         
         </div>
       </div>
-    </div></Link>
+    </div>
   )
 }
 
