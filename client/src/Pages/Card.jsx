@@ -37,7 +37,6 @@ function Card({shot}) {
     e.preventDefault();
   }
 
-  // Early return if shot data is missing
   if (!shot) {
     return null;
   }

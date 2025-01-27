@@ -19,7 +19,6 @@ function AuthProvider({ children }) {
     const user = response.data.user;
     const token = response.data.token;
   
-    // Store user and token in localStorage
     localStorage.setItem('currentUser', JSON.stringify({ ...user, token }));
     setAuthData({ ...user, token });
   };
@@ -32,12 +31,11 @@ function AuthProvider({ children }) {
   const user = { id: response.data.id, name, email };
   const token = response.data.token;
 
-  // Store user and token in localStorage
   localStorage.setItem('currentUser', JSON.stringify({ ...user, token }));
   setAuthData({ ...user, token });
       console.log(user);
     } catch (error) {
-      // Throw the error so it can be handled by handleSubmit
+   
       throw error.response || error;
     }
   };
