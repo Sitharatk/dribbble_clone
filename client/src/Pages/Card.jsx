@@ -63,7 +63,7 @@ function Card({shot}) {
                     </h3>
                     {userId && (
                     <div className="flex space-x-2">
-                      <button className="p-2 rounded-full bg-white text-gray-100 hover:bg-opacity-90 transition-colors duration-200">
+                      <button className="p-2 rounded-full bg-white text-gray-500 hover:bg-opacity-90 transition-colors duration-200">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="h-4 w-4 md:h-5 md:w-5"
@@ -127,7 +127,7 @@ function Card({shot}) {
 
             <div className="flex flex-col md:flex-row items-end md:items-center justify-between w-full">
               <div className="flex items-center sm:ml-32 space-x-3 text-gray-400">
-                <div className="flex items-center space-x-1">
+                <div className="flex items-center">
                   <button className="p-2 rounded">
                     <svg 
                       xmlns="http://www.w3.org/2000/svg" 

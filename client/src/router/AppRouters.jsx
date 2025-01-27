@@ -16,7 +16,7 @@ import Upload from '../Pages/Upload'
 import Services from '../Pages/Services'
 import Hiring from '../Pages/Hiring'
 import EditShot from '../Pages/EditShot'
-
+import Likes from '../Pages/Likes'
 
 function AppRouters() {
   return (
@@ -41,6 +41,7 @@ function AppRouters() {
         <Route path='/hiring' element={<Hiring/>}/>
         <Route path='/shots/:id' element={<Shots/>}/>
         <Route path ='/editshot/:id' element={<EditShot/>}/>
+        <Route path='/likes' element={<Likes/>}/>
     
        
         </Route>

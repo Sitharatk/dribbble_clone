@@ -101,79 +101,74 @@ const [allShots, setAllShots] = useState([]);
     
         fetchAllShots();
       }, []);
-      const likeShot = async (shotId) => {
+ const likeShot = async (shotId) => {
+   
         try {
-          const response = await axios.post(
-            `http://localhost:3000/post/shots/${shotId}/like`, 
-            {}, 
-            {
-              headers: {
-                Authorization: `Bearer ${authData?.token}`
-              }
-            }
-          );
-      
-          // Update shots in context
-          setShots(prevShots => 
-            prevShots.map(shot => 
-              shot._id === shotId 
-                ? { ...shot, likes: [...shot.likes, authData.id] } 
-                : shot
-            )
-          );
-      
-          // Update all shots
-          setAllShots(prevShots => 
-            prevShots.map(shot => 
-              shot._id === shotId 
-                ? { ...shot, likes: [...shot.likes, authData.id] } 
-                : shot
-            )
-          );
-      
-          return response.data;
+            const response = await axios.post(
+                `http://localhost:3000/post/shots/${shotId}/like`, 
+                {}, 
+                {
+                    headers: { Authorization: `Bearer ${authData?.token}` }
+                }
+            );
+    
+            setShots(prevShots => 
+                prevShots.map(shot => 
+                    shot._id === shotId 
+                        ? { ...shot, likes: [...shot.likes, authData.id] } 
+                        : shot
+                )
+            );
+    
+            setAllShots(prevShots => 
+                prevShots.map(shot => 
+                    shot._id === shotId 
+                        ? { ...shot, likes: [...shot.likes, authData.id] } 
+                        : shot
+                )
+            );
+    
+            return response.data;
         } catch (error) {
-          console.error('Error liking shot:', error);
-          throw error;
+            console.error('Error liking shot:', error);
+            throw error;
         }
-      };
+    };
+    
+    const unlikeShot = async (shotId) => {
       
-      const unlikeShot = async (shotId) => {
-        try {
+  
+      try {
           const response = await axios.delete(
-            `http://localhost:3000/post/shots/${shotId}/like`, 
-            {
-              headers: {
-                Authorization: `Bearer ${authData?.token}`
+              `http://localhost:3000/post/shots/${shotId}/like`, 
+              {
+                  headers: { Authorization: `Bearer ${authData?.token}` }
               }
-            }
           );
-      
-          // Update shots in context
+  
           setShots(prevShots => 
-            prevShots.map(shot => 
-              shot._id === shotId 
-                ? { ...shot, likes: shot.likes.filter(id => id !== authData.id) } 
-                : shot
-            )
+              prevShots.map(shot => 
+                  shot._id === shotId 
+                      ? { ...shot, likes: shot.likes.filter(id => id !== authData.id) } 
+                      : shot
+              )
           );
-      
-          // Update all shots
+  
           setAllShots(prevShots => 
-            prevShots.map(shot => 
-              shot._id === shotId 
-                ? { ...shot, likes: shot.likes.filter(id => id !== authData.id) } 
-                : shot
-            )
+              prevShots.map(shot => 
+                  shot._id === shotId 
+                      ? { ...shot, likes: shot.likes.filter(id => id !== authData.id) } 
+                      : shot
+              )
           );
-      
+  
           return response.data;
-        } catch (error) {
+      } catch (error) {
           console.error('Error unliking shot:', error);
           throw error;
-        }
-      };
-      
+      }
+  };
+  
     return (
         <ShotContext.Provider value={{ shots,loading,deleteShot,updateShot,allShots,likeShot,unlikeShot}}>
           {children}

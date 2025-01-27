@@ -64,7 +64,7 @@ console.log(shots)
                     </div>
 
                     {/* Tags */}
-                    {shot.tags && shot.tags.length > 0 && (
+                    {/* {shot.tags && shot.tags.length > 0 && (
                         <div className="flex flex-wrap gap-2">
                             {shot.tags.map((tag, index) => (
                                 <span 
@@ -75,7 +75,7 @@ console.log(shots)
                                 </span>
                             ))}
                         </div>
-                    )}
+                    )} */}
                 </div>
             </div>
         ))}

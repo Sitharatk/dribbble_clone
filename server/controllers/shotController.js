@@ -164,8 +164,9 @@ export const updateShot = async (req, res) => {
 
         // Check if the user has already liked the shot 
         if (shot.likes.includes(userId)) { 
-            return res.status(400).json({ message: 'You have already liked this shot' }); 
-        } 
+            return res.status(200).json({ message: 'Already liked', shot }); 
+        }
+        
  
         // Add the user's ID to the likes array 
         shot.likes.push(userId); 
@@ -188,7 +189,10 @@ export const deleteLike = async (req, res) => {
         if (!shot) {
             return res.status(404).json({ message: 'Shot not found' });
         }
-
+        if (!shot.likes.includes(req.user.id)) {
+            return res.status(200).json({ message: 'Like not found', shot });
+        }
+        
         // Remove the user's ID from the likes array
         shot.likes = shot.likes.filter(id => id !== req.user.id);
         await shot.save();
