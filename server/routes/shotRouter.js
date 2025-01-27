@@ -9,6 +9,6 @@ shotRouter
 .delete('/shots/:id', verifyToken, deleteShot)	
 .put('/shots/:id', upload.single('image'), updateShot)
 .get('/shots', getAllShots)
-.delete('/shots/:/like', verifyToken, deleteLike)
-.post('/shots/:id/like', verifyToken,likeShot)   
+.delete('/shots/:shotId/like', verifyToken, deleteLike)
+.post('/shots/:shotId/like', verifyToken,likeShot)   
 export default shotRouter

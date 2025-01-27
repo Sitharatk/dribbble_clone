@@ -147,34 +147,39 @@ export const updateShot = async (req, res) => {
     }
   };
   
-export const likeShot = async (req, res) => {
-    const { shotId } = req.params;
+  export const likeShot = async (req, res) => { 
+    const { shotId } = req.params; 
+    const userId = req.user.id;  // Ensure this matches how you're setting req.user in authentication middleware
 
-    try {
-        const shot = await shotModel.findById(shotId);
-        if (!shot) {
-            return res.status(404).json({ message: 'Shot not found' });
+    try { 
+        const shot = await shotModel.findById(shotId); 
+        if (!shot) { 
+            return res.status(404).json({ message: 'Shot not found' }); 
+        } 
+ 
+        // Ensure shot.likes exists and is an array
+        if (!shot.likes) {
+            shot.likes = [];
         }
 
-        // Check if the user has already liked the shot
-        if (shot.likes.includes(req.user.id)) {
-            return res.status(400).json({ message: 'You have already liked this shot' });
-        }
-
-        // Add the user's ID to the likes array
-        shot.likes.push(req.user.id);
-        await shot.save();        
-
-        res.status(200).json({ message: 'Shot liked successfully' });
-    } catch (error) {
-        console.error('Error liking shot:', error);
-        res.status(500).json({
-            message: 'Error liking shot',
-            error: error.message,
-        });
-    }
+        // Check if the user has already liked the shot 
+        if (shot.likes.includes(userId)) { 
+            return res.status(400).json({ message: 'You have already liked this shot' }); 
+        } 
+ 
+        // Add the user's ID to the likes array 
+        shot.likes.push(userId); 
+        await shot.save();         
+ 
+        res.status(200).json({ message: 'Shot liked successfully', shot }); 
+    } catch (error) { 
+        console.error('Error liking shot:', error); 
+        res.status(500).json({ 
+            message: 'Error liking shot', 
+            error: error.message, 
+        }); 
+    } 
 };
-
 export const deleteLike = async (req, res) => {
     const { shotId } = req.params;
 

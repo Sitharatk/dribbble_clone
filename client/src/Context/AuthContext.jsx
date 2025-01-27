@@ -45,8 +45,8 @@ function AuthProvider({ children }) {
  
   const logout = (navigate) => {
     setAuthData(null);
-    localStorage.removeItem('token');
-    localStorage.removeItem('authData');
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem("token");
     if (navigate) {
       navigate('/');
     }
