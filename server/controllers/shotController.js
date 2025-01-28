@@ -29,11 +29,11 @@ export const uploadShot = async (req, res) => {
         const shotData = {
             title,
             tags: tags ? tags.split(',').map(tag => tag.trim()) : [],
-            user: req.user.id, // Changed from req.user._id to req.user.id
-            image: result.secure_url // Add image URL from Cloudinary
+            user: req.user.id, 
+            image: result.secure_url 
         };
 
-        // Create a new shot with the user data attached
+       
         const newShot = await shotModel.create(shotData);
 
         res.status(201).json({
@@ -55,8 +55,8 @@ export const getShots = async (req, res) => {
         const shots = await shotModel.find({ user: req.user.id })
         .populate({
             path: 'user',
-            select: 'name username profilePicture', // Only select the fields you need
-          }); // Fetch shots for the logged-in user
+            select: 'name username profilePicture', 
+          }); 
         res.status(200).json({ shots });
     } catch (error) {
         console.error('Error fetching shots:', error);
@@ -115,7 +115,7 @@ export const updateShot = async (req, res) => {
       
       const updateData = {
         title,
-        // Safely parse tags, ensure that they are being sent as a string
+
         tags: tags ? JSON.parse(tags) : [] 
       };
   

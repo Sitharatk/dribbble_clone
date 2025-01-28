@@ -5,6 +5,7 @@ import { useContext, useState } from 'react';
 import { ShotContext } from '../Context/ShotContext';
 import Card from './Card';
 import { AuthContext } from '../Context/AuthContext';
+import { Link } from 'react-router-dom';
 
 function Home() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -85,16 +86,14 @@ console.log('filteredShots',filteredShots)
     )}
   </div>
 
-  <div className="flex flex-wrap space-x-3 mt-2 text-[15px]">
-    <button className="font-semibold">Discover</button>
-    <button className="font-semibold">Animation</button>
-    <button className="font-semibold">Branding</button>
-    <button className="font-semibold">Illustration</button>
-    <button className="font-semibold">Mobile</button>
-    <button className="font-semibold">Product Design</button>
-    <button className="font-semibold">Typography</button>
-    <button className="font-semibold">Web Design</button>
-  </div>
+  
+<div className="flex flex-wrap space-x-5 mt-2 text-[15px]">
+  {['Discover', 'Animation', 'Branding', 'Illustration', 'Logo', 'Product Design', 'Typography', 'Web Design'].map((tag) => (
+    <Link key={tag} to={`/posts/${tag.toLowerCase()}`}>
+      <button className="font-semibold">{tag}</button>
+    </Link>
+  ))}
+</div>
 
   <div>
     <button className="border rounded-full px-6 py-2 flex items-center space-x-2">

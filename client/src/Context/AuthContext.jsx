@@ -18,7 +18,7 @@ function AuthProvider({ children }) {
     const response = await axios.post('http://localhost:3000/auth/login', { email, password });
     const user = response.data.user;
     const token = response.data.token;
-  
+
     localStorage.setItem('currentUser', JSON.stringify({ ...user, token }));
     setAuthData({ ...user, token });
   };
@@ -51,7 +51,7 @@ function AuthProvider({ children }) {
   };
   useEffect(() => {
  
-    const storedData = localStorage.getItem('authData');
+    const storedData = localStorage.getItem('currentUser');
     if (storedData) {
       setAuthData(JSON.parse(storedData));
     }

@@ -6,7 +6,7 @@ import joiUserSchema  from '../models/validation.js';
 
 
 const createToken=(id)=>{
-    return jwt.sign({id},process.env.JWT_SECRET, { expiresIn: '45m' })
+    return jwt.sign({id},process.env.JWT_SECRET, { expiresIn: '2hr' })
  }
  const createRefreshToken = (id) => {
    return jwt.sign({ id }, process.env.JWT_REFRESH_TOKEN, { expiresIn: '7d' });
@@ -16,11 +16,11 @@ const createToken=(id)=>{
  export const registerUser = async (req, res, next) => {
     
     try {
-      const { error } = joiUserSchema.validate(req.body);
+    //   const { error } = joiUserSchema.validate(req.body);
 
-      if (error) {
-        return res.status(400).json({ message: error.details[0].message });
-      }
+    //   if (error) {
+    //     return res.status(400).json({ message: error.details[0].message });
+    //   }
       const { name, username, email, password } = req.body;
       const existingUser = await User.findOne({ email });
 

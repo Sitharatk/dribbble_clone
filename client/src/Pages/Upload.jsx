@@ -48,7 +48,7 @@ function Upload() {
   };
   console.log('Auth state:', {
     userId: authData?.id,
-    hasToken: !!authData?.token, // Check if the token exists
+    hasToken: !!authData?.token, 
   });
   console.log('Stored auth data:', JSON.parse(localStorage.getItem('currentUser')));
   
@@ -66,10 +66,9 @@ function Upload() {
     formData.append('tags', tags);
   
     try {
-      const userId = authData.id; // Assuming this is where you get the user's ID
-      const token = authData.token; // Ensure token is available in the context
-  
-      // Add the token to the headers for authorization
+      const userId = authData.id; 
+      const token = authData.token; 
+
       const response = await axios.post(
         `http://localhost:3000/auth/user/${userId}/shots`,
         formData,
@@ -100,7 +99,7 @@ function Upload() {
       <div className="bg-white rounded-lg p-8 max-w-md w-full mx-4">
         <h2 className="text-2xl font-bold mb-4">Leave page?</h2>
         <p className="text-gray-600 mb-6">
-          You haven't finished uploading your shot. Are you sure you want to leave?
+          You haven&apos;t finished uploading your shot. Are you sure you want to leave?
         </p>
         <div className="flex justify-end gap-4">
           <button
@@ -152,7 +151,7 @@ function Upload() {
             placeholder="Add tags....."
             className="w-full p-3 border rounded-md"
           />
-          <p className="text-sm text-gray-400 mt-1"><span className="text-black">Suggested:</span>design ,illustration,ui,branding,logo,graphic design,vector,ux,typography,app</p>
+          <p className="text-sm text-gray-400 mt-1"><span className="text-black">Suggested:</span>web design ,illustration,ui,branding,logo,graphic design,vector,ux,typography,app</p>
         </div>
 
         <div className="flex justify-end gap-4">
@@ -229,7 +228,7 @@ function Upload() {
           </div>
         ) : (
           <>
-            {/* Title */}
+         
             <h1 className="text-4xl font-bold ml-56 text-gray-800 mb-8">
               What have you been working on?
             </h1>
@@ -277,7 +276,7 @@ function Upload() {
                 </p>
               </div>
 
-              {/* Adjusted List */}
+       
               <div className="mt-6 flex justify-around text-sm text-gray-600">
                 <ul className="list-disc space-y-2">
                   <li>High resolution images (png, jpg, gif)</li>
@@ -301,7 +300,6 @@ function Upload() {
         )}
       </div>
 
-      {/* Render Modals */}
       {showCancelModal && <CancelModal />}
       {showPublishModal && <PublishModal />}
     </>

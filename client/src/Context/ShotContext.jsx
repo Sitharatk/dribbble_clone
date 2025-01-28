@@ -18,10 +18,10 @@ const [allShots, setAllShots] = useState([]);
         try {
           const response = await axios.get(`http://localhost:3000/post/shots/${authData?.id}`, {
             headers: {
-              Authorization: `Bearer ${authData?.token}`, // Send token for authorization
+              Authorization: `Bearer ${authData?.token}`, 
             },
           });
-          setShots(response.data.shots); // Store the fetched posts
+          setShots(response.data.shots);
         } catch (error) {
           console.error("Error fetching shots:", error);
         } finally {
@@ -30,11 +30,11 @@ const [allShots, setAllShots] = useState([]);
       };
     
       if (authData?.id) {
-        fetchShots(); // Fetch posts for the specific user
+        fetchShots();
       } else {
         setLoading(false);
       }
-    }, [authData]); // Re-run when authData changes
+    }, [authData]); 
     
       const deleteShot = async (id) => {
         try {
@@ -47,12 +47,12 @@ const [allShots, setAllShots] = useState([]);
           if (response.status === 200) {
             setShots((prevShots) => prevShots.filter((shot) => shot._id !== id));
           } else {
-            // Handle non-200 status
+          
             console.error('Delete failed');
           }
         } catch (error) {
           console.error('Error deleting shot:', error);
-          // Optionally show an error message to the user
+          
         }
       };
       const updateShot = async (id, updatedData) => {
@@ -89,17 +89,26 @@ const [allShots, setAllShots] = useState([]);
       };
 
       useEffect(() => {
+        let isMounted = true;
+        
         const fetchAllShots = async () => {
           try {
             const response = await axios.get('http://localhost:3000/post/shots');
-            setAllShots(response.data.shots);
-            console.log('Fetched all shots:', response.data);
+            if (isMounted) {
+              setAllShots(response.data.shots);
+            }
           } catch (error) {
-            console.error('Error fetching all shots:', error);
+            if (isMounted) {
+              console.error('Error fetching all shots:', error);
+            }
           }
         };
-    
+      
         fetchAllShots();
+      
+        return () => {
+          isMounted = false;
+        };
       }, []);
  const likeShot = async (shotId) => {
    

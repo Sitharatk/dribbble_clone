@@ -5,10 +5,28 @@ const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    profilePicture: { type: String, default: ' ' },
+    profilePicture: { type: String, default: '' },
     bio: { type: String },
-    location:{type:String},
+    location: { type: String },
+    followers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        default: []
+    }],
+    following: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        default: []
+    }],
+    likedShots: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Shot',
+        default: []
+    }],
     createdAt: { type: Date, default: Date.now },
+}, {
+   
+    timestamps: true
 });
 
 const userModel = mongoose.models.user || mongoose.model('User', userSchema);

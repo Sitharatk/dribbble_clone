@@ -7,6 +7,7 @@ const ShotDetail = () => {
   const { id } = useParams();
   const { loading, deleteShot, allShots } = useContext(ShotContext);
   const { authData } = useContext(AuthContext);
+  
   const shot = allShots?.find((s) => s._id === id);
   const navigate = useNavigate();
 
@@ -60,15 +61,15 @@ const ShotDetail = () => {
         <h1 className="text-2xl font-semibold text-gray-900">{shot.title}</h1>
         <div className="py-4 flex items-center justify-between">
   <div className="flex items-center space-x-3">
-    <img
+  <Link to={`/${shot.user.username}`}  ><img
       src={shot.user.profilePicture}
       alt={shot.user?.name || "User"}
       className="w-12 h-12 rounded-full object-cover"
-    />
+    /></Link>
     <div>
-      <p className="text-sm font-semibold text-gray-900">
+    <Link to={`/${shot.user.username}`} ><p className="text-sm font-semibold text-gray-900">
         {shot.user?.name || "Anonymous"}
-      </p>
+      </p></Link>
      {!currentUserShot&& <p className="text-green-400 text-sm">Availabe for work <span className="text-gray-400"><button>Follow</button></span></p>}
     </div>
   </div>
