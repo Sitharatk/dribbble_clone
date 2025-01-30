@@ -178,8 +178,23 @@ const [allShots, setAllShots] = useState([]);
       }
   };
   
+  const shotViews = async (shotId) => {
+    try {
+        const response = await axios.post(
+            `http://localhost:3000/post/shots/${shotId}/views`, 
+            {}, 
+            {
+                headers: { Authorization: `Bearer ${authData?.token}` }
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error updating shot views:', error);
+        throw error;
+    }
+  }
     return (
-        <ShotContext.Provider value={{ shots,loading,deleteShot,updateShot,allShots,likeShot,unlikeShot}}>
+        <ShotContext.Provider value={{ shots,loading,deleteShot,updateShot,allShots,likeShot,unlikeShot,shotViews}}>
           {children}
         </ShotContext.Provider>
       );

@@ -14,8 +14,8 @@ function UserDetails() {
     { name: 'Work', path: '/userwork' },
     { name: 'Services',path: '/services' },
     { name: 'Boosted Shots' },
-    { name: 'Collections' },
-    { name: 'Liked Shots' },
+    { name: 'Collections',path: '/collections' },
+    { name: 'Liked Shots' ,path: '/likes'},
     { name: 'About', path: '/userabout' },
   ];
 

@@ -246,3 +246,23 @@ export const deleteFromCollections = async (req, res) => {
         });
     }
 };
+
+export const shotViews = async (req, res) => {
+    const { shotId } = req.params;
+
+    try {
+        const shot = await shotModel.findById(shotId);
+        if (!shot) {
+            return res.status(404).json({ message: 'Shot not found' });
+        }
+        shot.views += 1;
+        await shot.save();
+        res.status(200).json({ message: 'Shot views updated successfully' });
+    } catch (error) {
+        console.error('Error updating shot views:', error);
+        res.status(500).json({
+            message: 'Error updating shot views',
+            error: error.message,
+        });
+    }
+};

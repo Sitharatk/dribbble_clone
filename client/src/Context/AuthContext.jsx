@@ -57,8 +57,50 @@ function AuthProvider({ children }) {
     }
   }, []);
 
+  const followUser = async (userId) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/auth/user/${userId}/follow`, 
+        {}, // Empty body
+        {
+          headers: { Authorization: `Bearer ${authData?.token}` }
+        }
+      );
+  
+      const updatedUser = response.data.user;
+      setAuthData((prev) => ({
+        ...prev,
+        following: updatedUser.following,
+      }));
+      localStorage.setItem('currentUser', JSON.stringify({ ...authData, following: updatedUser.following }));
+    } catch (error) {
+      console.error('Error following user:', error.response?.data || error);
+    }
+  };
+  
+  const unfollowUser = async (userId) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/auth/user/${userId}/unfollow`, 
+        {}, // Empty body
+        {
+          headers: { Authorization: `Bearer ${authData?.token}` }
+        }
+      );
+  
+      const updatedUser = response.data.user;
+      setAuthData((prev) => ({
+        ...prev,
+        following: updatedUser.following,
+      }));
+      localStorage.setItem('currentUser', JSON.stringify({ ...authData, following: updatedUser.following }));
+    } catch (error) {
+      console.error('Error unfollowing user:', error.response?.data || error);
+    }
+  };
+  
   return (
-    <AuthContext.Provider value={{ authData, login, register, logout ,setAuthData}}>
+    <AuthContext.Provider value={{ authData, login, register, logout ,setAuthData,followUser,unfollowUser}}>
       {children}
     </AuthContext.Provider>
   );

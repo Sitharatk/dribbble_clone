@@ -1,5 +1,5 @@
 import express from 'express'
-import { deleteLike, deleteShot, getAllShots, getShots, likeShot, updateShot } from '../controllers/shotController.js'
+import { deleteLike, deleteShot, getAllShots, getShots, likeShot, shotViews, updateShot } from '../controllers/shotController.js'
 import { verifyToken } from '../middleware/verifyToken.js'
 import upload from '../middleware/multer.js'
 
@@ -10,5 +10,6 @@ shotRouter
 .put('/shots/:id', upload.single('image'), updateShot)
 .get('/shots', getAllShots)
 .delete('/shots/:shotId/like', verifyToken, deleteLike)
-.post('/shots/:shotId/like', verifyToken,likeShot)   
+.post('/shots/:shotId/like', verifyToken,likeShot) 
+.post('/shots/:shotId/views',shotViews)
 export default shotRouter

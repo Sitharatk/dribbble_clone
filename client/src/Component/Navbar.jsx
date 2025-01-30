@@ -27,6 +27,11 @@ function Navbar() {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
+  const handleDropdownClick = (tag) => {
+    // Navigate to the category page
+    navigate(`/posts/${tag.toLowerCase()}`);
+  };
+
   useEffect(() => {
     if (isHomePage) {
       const handleScroll = () => {
@@ -143,31 +148,47 @@ function Navbar() {
       Explore <FontAwesomeIcon icon={faAngleDown} className="text-xs ml-1" />
     </button>
     {isDropdownOpen && (
-      <div className="absolute left-0 top-full mt-4 p-3 w-64 bg-white shadow-xl rounded-md z-10 border border-gray-50">
-        <ul
-          className="flex flex-col space-y-4 p-2 text-gray-700"
-          style={{ fontSize: '15px' }}
-        >
-          <li className="flex items-center space-x-2 font-semibold hover:text-gray-900 cursor-pointer">
-            <FontAwesomeIcon icon={faArrowTrendUp} />
-            <span>Popular</span>
-          </li>
-          <li className="flex items-center space-x-2 font-semibold hover:text-gray-900 cursor-pointer">
-            <FontAwesomeIcon icon={faStar} />
-            <span>New and Noteworthy</span>
-          </li>
-          <hr className="border-gray-200 my-2" />
-          <li className="hover:text-gray-400 cursor-pointer">Product Design</li>
-          <li className="hover:text-gray-400 cursor-pointer">Web Design</li>
-          <li className="hover:text-gray-400 cursor-pointer">Animation</li>
-          <li className="hover:text-gray-400 cursor-pointer">Branding</li>
-          <li className="hover:text-gray-400 cursor-pointer">Illustration</li>
-          <li className="hover:text-gray-400 cursor-pointer">Mobile</li>
-          <li className="hover:text-gray-400 cursor-pointer">Typography</li>
-          <li className="hover:text-gray-400 cursor-pointer">Print</li>
-        </ul>
-      </div>
-    )}
+        <div className="absolute left-0 top-full mt-4 p-3 w-64 bg-white shadow-xl rounded-xl z-10 border border-gray-50">
+          <ul
+            className="flex flex-col space-y-4 p-2 text-gray-700"
+            style={{ fontSize: '15px' }}
+          >
+            <li
+              className="flex items-center space-x-2 font-semibold hover:text-gray-900 cursor-pointer"
+              onClick={() => handleDropdownClick('popular')}
+            >
+              <FontAwesomeIcon icon={faArrowTrendUp} />
+              <span>Popular</span>
+            </li>
+            <li
+              className="flex items-center space-x-2 font-semibold hover:text-gray-900 cursor-pointer"
+              onClick={() => handleDropdownClick('new-and-noteworthy')}
+            >
+              <FontAwesomeIcon icon={faStar} />
+              <span>New and Noteworthy</span>
+            </li>
+            <hr className="border-gray-200 my-2" />
+            {[
+              'Product Design',
+              'Web Design',
+              'Animation',
+              'Branding',
+              'Illustration',
+              'Logo',
+              'Typography',
+              'Print',
+            ].map((tag) => (
+              <li
+                key={tag}
+                className="hover:text-gray-400 cursor-pointer"
+                onClick={() => handleDropdownClick(tag)}
+              >
+                {tag}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
   </div>
 
   <div
@@ -205,7 +226,7 @@ function Navbar() {
   </div>
 
   <button className="hover:text-gray-400 font-semibold">Find Jobs</button>
-  <button className="hover:text-gray-400 font-semibold">Blog</button>
+ <Link to='/blog'> <button className="hover:text-gray-400 font-semibold">Blog</button></Link>
 </div>
 
 <div className="flex items-center mt-2">

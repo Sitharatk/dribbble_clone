@@ -5,10 +5,9 @@ import { AuthContext } from '../Context/AuthContext'
 import { ShotContext } from '../Context/ShotContext';
 
 function Card({shot}) {
-  const { likeShot, unlikeShot } = useContext(ShotContext);
+  const { likeShot, unlikeShot ,shotViews} = useContext(ShotContext);
   const { authData } = useContext(AuthContext);
   const [likes, setLikes] = useState(shot?.likes || []);
-
   const userId = authData?.id || null;
 
   const handleLikeToggle = async () => {
@@ -63,6 +62,7 @@ function Card({shot}) {
                     </h3>
                     {userId && (
                     <div className="flex space-x-2">
+                      {/* //collection button */}
                       <button className="p-2 rounded-full bg-white text-gray-500 hover:bg-opacity-90 transition-colors duration-200">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -166,7 +166,7 @@ function Card({shot}) {
                       fill="white"
                     />
                   </svg>
-                  <span className="text-sm">{shot.views}</span>
+                  <span className="text-sm">{shotViews.length || 0}</span>
                 </div>
               </div>
             </div>

@@ -89,7 +89,7 @@ const EditShot = () => {
     try {
       const response = await updateShot(id, formData);  // pass FormData
       console.log('Update response:', response);
-      navigate('/');
+      navigate(-2);
     } catch (error) {
       console.error('Error updating shot:', error.response?.data || error);
     }

@@ -4,6 +4,7 @@ import { profileUpdate, updateExistingProfile, deleteAvatar} from '../controller
 import upload from '../middleware/multer.js'
 import { deleteShot, getShots, uploadShot } from '../controllers/shotController.js'
 import { verifyToken } from '../middleware/verifyToken.js'
+import { follow, unfollow } from '../controllers/followController.js'
 
 
 const userRouter=express.Router()
@@ -17,6 +18,8 @@ userRouter
 .post('/user/:id/shots', verifyToken,upload.single('image'), uploadShot)
 .get('/shots',verifyToken, getShots)
 .delete('/shots/:id', verifyToken, deleteShot)	
+.put('/user/:id/follow', verifyToken, follow)
+.put('/user/:id/unfollow', verifyToken, unfollow)
 
 
 

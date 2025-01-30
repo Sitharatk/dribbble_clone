@@ -19,6 +19,8 @@ import EditShot from '../Pages/EditShot'
 import Likes from '../Pages/Likes'
 import Others from '../Pages/Others'
 import Tags from '../Pages/Tags'
+import Collections from '../Pages/Collections'
+import Blog from '../Pages/Blog'
 
 function AppRouters() {
   return (
@@ -46,7 +48,8 @@ function AppRouters() {
         <Route path='/likes' element={<Likes/>}/>
         <Route path='/:username' element={<Others/>}/>
       <Route path='/posts/:tags' element={<Tags/>}/>
-       
+       <Route path='/collections'element={<Collections/>}/>
+       <Route path='/blog' element={<Blog/>}/>
         </Route>
     </Routes>
 

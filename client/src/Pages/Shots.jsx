@@ -6,7 +6,7 @@ import { AuthContext } from "../Context/AuthContext";
 const ShotDetail = () => {
   const { id } = useParams();
   const { loading, deleteShot, allShots } = useContext(ShotContext);
-  const { authData } = useContext(AuthContext);
+  const { authData,followUser,unfollowUser} = useContext(AuthContext);
   
   const shot = allShots?.find((s) => s._id === id);
   const navigate = useNavigate();
