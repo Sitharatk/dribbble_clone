@@ -47,7 +47,7 @@ function AuthProvider({ children }) {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/auth/signup`,
         { name, username, email, password },
-        { withCredentials: true } // ✅ Ensure cookies are set
+        { withCredentials: true } 
       );
   
       const user = { id: response.data.id, name, email };
