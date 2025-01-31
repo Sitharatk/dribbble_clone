@@ -6,7 +6,7 @@ import joiUserSchema  from '../models/validation.js';
 
 
 const createToken=(id)=>{
-    return jwt.sign({id},process.env.JWT_SECRET, { expiresIn: '2hr' })
+    return jwt.sign({id},process.env.JWT_SECRET, { expiresIn: '5m' })
  }
  const createRefreshToken = (id) => {
    return jwt.sign({ id }, process.env.JWT_REFRESH_TOKEN, { expiresIn: '7d' });
@@ -91,20 +91,20 @@ const createToken=(id)=>{
   
   export const refreshAccessToken = async (req, res, next) => {
     const refreshToken = req.cookies?.refreshToken;
-  
+    
     if (!refreshToken) {
       return next(new CustomError('Refresh token is required', 400));
     }
   
     try {
       const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN);
+      console.log('Decoded Token:', decoded);  // Log the decoded token
   
       const newToken = createToken(decoded.id);
   
-      res.status(200).json({  message: "Token refreshed",token: newToken });
+      res.status(200).json({  message: "Token refreshed", token: newToken });
     } catch (error) {
       console.error('Error in refreshAccessToken:', error.message, error.stack);
       next(new CustomError('Invalid or expired refresh token', 401));
     }
   };
-  

@@ -1,9 +1,8 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect, useCallback } from 'react';
+import axiosInstance from '../../utilities/axiosInstance';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
-
-
-// eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext();
 
 // eslint-disable-next-line react/prop-types
@@ -12,18 +11,36 @@ function AuthProvider({ children }) {
     const storedData = localStorage.getItem('currentUser');
     return storedData ? JSON.parse(storedData) : null;
   });
-  
+
+  const updateAuthData = useCallback((data) => {
+    if (data) {
+      localStorage.setItem('currentUser', JSON.stringify(data));
+      localStorage.setItem('token', data.token);
+      setAuthData(data);
+    } else {
+      localStorage.removeItem('currentUser');
+      localStorage.removeItem('token');
+      setAuthData(null);
+    }
+  }, []);
 
   const login = async (email, password) => {
-    const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/login`, { email, password });
-    const user = response.data.user;
-    const token = response.data.token;
-
-    localStorage.setItem('currentUser', JSON.stringify({ ...user, token }));
-    setAuthData({ ...user, token });
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/auth/login`,
+        { email, password },
+        { withCredentials: true }
+      );
+      
+      const { user, token } = response.data;
+      updateAuthData({ ...user, token });
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Login failed');
+      throw error;
+    }
   };
-  
-  
+
+
 
   const register = async (name, username, email, password) => {
     try {
@@ -40,7 +57,6 @@ function AuthProvider({ children }) {
     }
   };
   
- 
   const logout = (navigate) => {
     setAuthData(null);
     localStorage.removeItem('currentUser');
@@ -59,12 +75,10 @@ function AuthProvider({ children }) {
 
   const followUser = async (userId) => {
     try {
-      const response = await axios.put(
-        `${import.meta.env.VITE_API_URL}/auth/user/${userId}/follow`, 
+      const response = await axiosInstance.put(
+        `/auth/user/${userId}/follow`, 
         {}, // Empty body
-        {
-          headers: { Authorization: `Bearer ${authData?.token}` }
-        }
+        
       );
   
       const updatedUser = response.data.user;
@@ -80,12 +94,10 @@ function AuthProvider({ children }) {
   
   const unfollowUser = async (userId) => {
     try {
-      const response = await axios.put(
-        `${import.meta.env.VITE_API_URL}/auth/user/${userId}/unfollow`, 
+      const response = await axiosInstance.put(
+        `/auth/user/${userId}/unfollow`, 
         {}, // Empty body
-        {
-          headers: { Authorization: `Bearer ${authData?.token}` }
-        }
+        
       );
   
       const updatedUser = response.data.user;

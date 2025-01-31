@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from './AuthContext';
-
+import axiosInstance from '../../utilities/axiosInstance';
 // eslint-disable-next-line react-refresh/only-export-components
 export const ShotContext = createContext();
 
@@ -16,11 +16,7 @@ const [allShots, setAllShots] = useState([]);
     useEffect(() => {
       const fetchShots = async () => {
         try {
-          const response = await axios.get(`${import.meta.env.VITE_API_URL}/post/shots/${authData?.id}`, {
-            headers: {
-              Authorization: `Bearer ${authData?.token}`, 
-            },
-          });
+          const response = await axiosInstance.get(`/post/shots/${authData?.id}`);
           setShots(response.data.shots);
         } catch (error) {
           console.error("Error fetching shots:", error);
@@ -38,11 +34,7 @@ const [allShots, setAllShots] = useState([]);
     
       const deleteShot = async (id) => {
         try {
-          const response = await axios.delete(`${import.meta.env.VITE_API_URL}/post/shots/${id}`, {
-            headers: {
-              Authorization: `Bearer ${authData?.token}`,
-            },
-          });
+          const response = await axiosInstance.delete(`/post/shots/${id}`);
           
           if (response.status === 200) {
             setShots((prevShots) => prevShots.filter((shot) => shot._id !== id));
@@ -57,16 +49,7 @@ const [allShots, setAllShots] = useState([]);
       };
       const updateShot = async (id, updatedData) => {
         try {
-          const response = await axios.put(
-            `${import.meta.env.VITE_API_URL}/post/shots/${id}`, 
-            updatedData, 
-            {
-              headers: {
-                Authorization: `Bearer ${authData?.token}`,
-                'Content-Type': 'multipart/form-data'
-              },
-            }
-          );
+          const response = await axiosInstance.put( `/post/shots/${id}`, updatedData,  );
       
           console.log('Backend update response:', response.data);
       
@@ -113,13 +96,7 @@ const [allShots, setAllShots] = useState([]);
  const likeShot = async (shotId) => {
    
         try {
-            const response = await axios.post(
-                `${import.meta.env.VITE_API_URL}/post/shots/${shotId}/like`, 
-                {}, 
-                {
-                    headers: { Authorization: `Bearer ${authData?.token}` }
-                }
-            );
+            const response = await axiosInstance.post(  `/post/shots/${shotId}/like`,   {},  );
     
             setShots(prevShots => 
                 prevShots.map(shot => 
@@ -148,12 +125,7 @@ const [allShots, setAllShots] = useState([]);
       
   
       try {
-          const response = await axios.delete(
-              `${import.meta.env.VITE_API_URL}/post/shots/${shotId}/like`, 
-              {
-                  headers: { Authorization: `Bearer ${authData?.token}` }
-              }
-          );
+          const response = await axiosInstance.delete( `/post/shots/${shotId}/like`,   );
   
           setShots(prevShots => 
               prevShots.map(shot => 
@@ -180,13 +152,9 @@ const [allShots, setAllShots] = useState([]);
   
   const shotViews = async (shotId) => {
     try {
-        const response = await axios.post(
-            `${import.meta.env.VITE_API_URL}/post/shots/${shotId}/views`, 
-            {}, 
-            {
-                headers: { Authorization: `Bearer ${authData?.token}` }
-            }
-        );
+        const response = await axiosInstance.post(
+            `/post/shots/${shotId}/views`, 
+            {},  );
         return response.data;
     } catch (error) {
         console.error('Error updating shot views:', error);
