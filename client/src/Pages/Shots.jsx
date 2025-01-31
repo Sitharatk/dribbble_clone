@@ -1,58 +1,56 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { ShotContext } from "../Context/ShotContext";
 import { AuthContext } from "../Context/AuthContext";
 
 const ShotDetail = () => {
   const { id } = useParams();
-
-  useEffect(()=>{
-console.log('id',id)
-  },[id])
-  // const { loading, deleteShot, allShots } = useContext(ShotContext);
-  // const { authData,followUser,unfollowUser} = useContext(AuthContext);
   
-  // const shot = allShots?.find((s) => s._id === id);
-  // const navigate = useNavigate();
+  const { loading, deleteShot, allShots } = useContext(ShotContext);
+  const { authData} = useContext(AuthContext);
+  
+const shot = allShots && id ? allShots.find((s) => s._id === id) : null;
+const navigate = useNavigate();
 
-  // const handleDelete = async () => {
-  //   if (window.confirm('Are you sure you want to delete this shot?')) {
-  //     await deleteShot(id);
-  //     navigate(-1);
-  //   }
-  // };
+const handleDelete = async () => {
+  if (window.confirm('Are you sure you want to delete this shot?')) {
+    await deleteShot(id);
+    navigate(-1);
+  }
+};
 
-  // if (loading) {
-  //   return (
-  //     <div className="flex items-center justify-center min-h-screen">
-  //       <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary"></div>
-  //     </div>
-  //   );
-  // }
-
-  // if (!allShots || allShots.length === 0) {
-  //   return (
-  //     <div className="flex items-center justify-center min-h-screen">
-  //       <h1 className="text-2xl font-bold">No shots available</h1>
-  //     </div>
-  //   );
-  // }
-
-  // if (!shot) {
-  //   return (
-  //     <div className="flex items-center justify-center min-h-screen">
-  //       <h1 className="text-2xl font-bold">Shot not found</h1>
-  //     </div>
-  //   );
-  // }
-
-  // // Check if current user owns the shot
-  // const currentUserShot = shot.user._id === authData.id;
-  // console.log('currentUserShot',currentUserShot)
-
+if (loading) {
+  return (
+    <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary"></div>
+      </div>
+    );
+  }
+  
+  if (!allShots || allShots.length === 0) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <h1 className="text-2xl font-bold">No shots available</h1>
+      </div>
+    );
+  }
+  
+  if (!shot) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <h1 className="text-2xl font-bold">Shot not found</h1>
+      </div>
+    );
+  }
+  
+  // Check if current user owns the shot
+  const currentUserShot = shot?.user?._id === authData?.id;
+  console.log('currentUserShot',currentUserShot)
+  console.log("check")
+  
   return (
     <div className="min-h-screen relative bg-black bg-opacity-50 flex items-center justify-center z-50">
-      {/* <button
+      <button
         className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
         onClick={() => navigate(-1)}
       >
@@ -175,7 +173,7 @@ console.log('id',id)
 }
       </div>
       </div>
-       */}
+      
     </div>
   );
 };

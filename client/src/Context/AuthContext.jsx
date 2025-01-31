@@ -2,6 +2,7 @@ import { createContext, useState, useEffect, useCallback } from 'react';
 import axiosInstance from '../../utilities/axiosInstance';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import axiosErrorManager from '../../utilities/axiosErrorManager';
 
 export const AuthContext = createContext();
 
@@ -35,7 +36,7 @@ function AuthProvider({ children }) {
       const { user, token } = response.data;
       updateAuthData({ ...user, token });
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Login failed');
+      toast.error(axiosErrorManager(error));
       throw error;
     }
   };
