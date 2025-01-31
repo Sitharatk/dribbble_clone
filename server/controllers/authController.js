@@ -6,7 +6,7 @@ import joiUserSchema  from '../models/validation.js';
 
 
 const createToken=(id)=>{
-    return jwt.sign({id},process.env.JWT_SECRET, { expiresIn: '5m' })
+    return jwt.sign({id},process.env.JWT_SECRET, { expiresIn: '45m' })
  }
  const createRefreshToken = (id) => {
    return jwt.sign({ id }, process.env.JWT_REFRESH_TOKEN, { expiresIn: '7d' });
