@@ -46,7 +46,7 @@ function EditProfile() {
       formDataToSend.append("bio", formData.bio);
 
       const response = await axios.put(
-        `http://localhost:3000/auth/user/${authData.id}/profile`,
+        `${import.meta.env.VITE_API_URL}/auth/user/${authData.id}/profile`,
         formDataToSend
       );
 
@@ -74,7 +74,7 @@ function EditProfile() {
   const handleDeleteAvatar = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:3000/auth/user/${authData.id}/avatar`
+        `${import.meta.env.VITE_API_URL}/auth/user/${authData.id}/avatar`
       );
       const updatedUser = response.data.user;
       setAuthData((prev) => ({

@@ -16,7 +16,7 @@ const [allShots, setAllShots] = useState([]);
     useEffect(() => {
       const fetchShots = async () => {
         try {
-          const response = await axios.get(`http://localhost:3000/post/shots/${authData?.id}`, {
+          const response = await axios.get(`${import.meta.env.VITE_API_URL}/post/shots/${authData?.id}`, {
             headers: {
               Authorization: `Bearer ${authData?.token}`, 
             },
@@ -38,7 +38,7 @@ const [allShots, setAllShots] = useState([]);
     
       const deleteShot = async (id) => {
         try {
-          const response = await axios.delete(`http://localhost:3000/post/shots/${id}`, {
+          const response = await axios.delete(`${import.meta.env.VITE_API_URL}/post/shots/${id}`, {
             headers: {
               Authorization: `Bearer ${authData?.token}`,
             },
@@ -58,7 +58,7 @@ const [allShots, setAllShots] = useState([]);
       const updateShot = async (id, updatedData) => {
         try {
           const response = await axios.put(
-            `http://localhost:3000/post/shots/${id}`, 
+            `${import.meta.env.VITE_API_URL}/post/shots/${id}`, 
             updatedData, 
             {
               headers: {
@@ -93,7 +93,7 @@ const [allShots, setAllShots] = useState([]);
         
         const fetchAllShots = async () => {
           try {
-            const response = await axios.get('http://localhost:3000/post/shots');
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/post/shots`);
             if (isMounted) {
               setAllShots(response.data.shots);
             }
@@ -114,7 +114,7 @@ const [allShots, setAllShots] = useState([]);
    
         try {
             const response = await axios.post(
-                `http://localhost:3000/post/shots/${shotId}/like`, 
+                `${import.meta.env.VITE_API_URL}/post/shots/${shotId}/like`, 
                 {}, 
                 {
                     headers: { Authorization: `Bearer ${authData?.token}` }
@@ -149,7 +149,7 @@ const [allShots, setAllShots] = useState([]);
   
       try {
           const response = await axios.delete(
-              `http://localhost:3000/post/shots/${shotId}/like`, 
+              `${import.meta.env.VITE_API_URL}/post/shots/${shotId}/like`, 
               {
                   headers: { Authorization: `Bearer ${authData?.token}` }
               }
@@ -181,7 +181,7 @@ const [allShots, setAllShots] = useState([]);
   const shotViews = async (shotId) => {
     try {
         const response = await axios.post(
-            `http://localhost:3000/post/shots/${shotId}/views`, 
+            `${import.meta.env.VITE_API_URL}/post/shots/${shotId}/views`, 
             {}, 
             {
                 headers: { Authorization: `Bearer ${authData?.token}` }

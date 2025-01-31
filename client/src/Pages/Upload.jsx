@@ -70,7 +70,7 @@ function Upload() {
       const token = authData.token; 
 
       const response = await axios.post(
-        `http://localhost:3000/auth/user/${userId}/shots`,
+        `${import.meta.env.VITE_API_URL}/auth/user/${userId}/shots`,
         formData,
         {
           headers: {

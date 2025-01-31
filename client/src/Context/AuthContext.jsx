@@ -15,7 +15,7 @@ function AuthProvider({ children }) {
   
 
   const login = async (email, password) => {
-    const response = await axios.post('http://localhost:3000/auth/login', { email, password });
+    const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/login`, { email, password });
     const user = response.data.user;
     const token = response.data.token;
 
@@ -27,7 +27,7 @@ function AuthProvider({ children }) {
 
   const register = async (name, username, email, password) => {
     try {
-      const response = await axios.post('http://localhost:3000/auth/signup', { name, username, email, password });
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/signup`, { name, username, email, password });
   const user = { id: response.data.id, name, email };
   const token = response.data.token;
 
@@ -60,7 +60,7 @@ function AuthProvider({ children }) {
   const followUser = async (userId) => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/auth/user/${userId}/follow`, 
+        `${import.meta.env.VITE_API_URL}/auth/user/${userId}/follow`, 
         {}, // Empty body
         {
           headers: { Authorization: `Bearer ${authData?.token}` }
@@ -81,7 +81,7 @@ function AuthProvider({ children }) {
   const unfollowUser = async (userId) => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/auth/user/${userId}/unfollow`, 
+        `${import.meta.env.VITE_API_URL}/auth/user/${userId}/unfollow`, 
         {}, // Empty body
         {
           headers: { Authorization: `Bearer ${authData?.token}` }

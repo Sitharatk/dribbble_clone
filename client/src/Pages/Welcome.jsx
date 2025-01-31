@@ -28,7 +28,7 @@ function Welcome() {
       try {
         const id = authData.id;
         const response = await axios.post(
-          `http://localhost:3000/auth/user/${id}/avatar`,
+          `${import.meta.env.VITE_API_URL}/auth/user/${id}/avatar`,
           formData,
           {
             headers: { 'Content-Type': 'multipart/form-data' },

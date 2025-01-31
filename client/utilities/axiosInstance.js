@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
 });
 
@@ -26,7 +26,7 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const response = await axios.post("http://localhost:3000/auth/refreshtoken", {}, {
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/refreshtoken`, {}, {
           withCredentials: true,
         });
 
