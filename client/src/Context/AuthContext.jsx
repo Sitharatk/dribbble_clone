@@ -44,18 +44,23 @@ function AuthProvider({ children }) {
 
   const register = async (name, username, email, password) => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/signup`, { name, username, email, password });
-  const user = { id: response.data.id, name, email };
-  const token = response.data.token;
-
-  localStorage.setItem('currentUser', JSON.stringify({ ...user, token }));
-  setAuthData({ ...user, token });
-      console.log(user);
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/auth/signup`,
+        { name, username, email, password },
+        { withCredentials: true } // ✅ Ensure cookies are set
+      );
+  
+      const user = { id: response.data.id, name, email };
+      const token = response.data.token;
+  
+      localStorage.setItem('currentUser', JSON.stringify({ ...user, token }));
+      setAuthData({ ...user, token });
     } catch (error) {
-   
+      console.error("Registration error:", error.response?.data || error);
       throw error.response || error;
     }
   };
+  
   
   const logout = (navigate) => {
     setAuthData(null);

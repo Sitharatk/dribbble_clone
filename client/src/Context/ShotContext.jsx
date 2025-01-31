@@ -50,15 +50,13 @@ const [allShots, setAllShots] = useState([]);
       const updateShot = async (id, updatedData) => {
         try {
           const response = await axiosInstance.put( `/post/shots/${id}`, updatedData,  );
-      
-          console.log('Backend update response:', response.data);
-      
+   
           if (response.status === 200) {
             setShots((prevShots) => {
               const updatedShots = prevShots.map((shot) =>
                 shot._id === id ? response.data.shot : shot
               );
-              console.log('Updated shots:', updatedShots);
+        
               return updatedShots;
             });
             
