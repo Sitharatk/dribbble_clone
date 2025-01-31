@@ -102,7 +102,7 @@ function Navbar() {
     navigate('/');
   };
 
-  console.log('Auth Data:', authData);
+  
 
   return (
     <nav

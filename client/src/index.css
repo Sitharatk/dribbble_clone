@@ -4,7 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 /* Default state - hide both arrows */
-.category-swiper .swiper-button-prev,
+/* .category-swiper .swiper-button-prev,
 .category-swiper .swiper-button-next {
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -12,19 +12,19 @@
 }
 
 /* Show left arrow when class is applied */
-.category-swiper.show-prev .swiper-button-prev {
+/* .category-swiper.show-prev .swiper-button-prev {
   opacity: 1;
   pointer-events: auto;
-}
+} */
 
 /* Show right arrow when class is applied */
-.category-swiper.show-next .swiper-button-next {
+/* .category-swiper.show-next .swiper-button-next {
   opacity: 1;
   pointer-events: auto;
-}
+} */ 
 
 /* General navigation styles */
-.swiper-button-next,
+/* .swiper-button-next,
 .swiper-button-prev {
   color: #666;
   width: 24px;
@@ -34,13 +34,13 @@
 .swiper-button-next::after,
 .swiper-button-prev::after {
   font-size: 16px;
-}
+} */
 
 /* Container styling */
 /* Existing swiper styles remain the same */
 
 /* Responsive container adjustments */
-.slider-container {
+/* .slider-container {
   position: relative;
   padding: 0 25px;
   margin: 0 auto;
@@ -51,7 +51,7 @@
   .slider-container {
     margin: 0;
   }
-}
+} */
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

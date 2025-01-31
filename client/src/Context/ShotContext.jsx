@@ -94,7 +94,7 @@ const [allShots, setAllShots] = useState([]);
  const likeShot = async (shotId) => {
    
         try {
-            const response = await axiosInstance.post(  `/post/shots/${shotId}/like`,   {},  );
+            const response = await axiosInstance.post( `/post/shots/${shotId}/like`,   {},  );
     
             setShots(prevShots => 
                 prevShots.map(shot => 

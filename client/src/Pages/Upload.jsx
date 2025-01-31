@@ -69,7 +69,7 @@ function Upload() {
       const userId = authData.id; 
       const token = authData.token; 
 
-      const response = await axios.post(
+       await axios.post(
         `${import.meta.env.VITE_API_URL}/auth/user/${userId}/shots`,
         formData,
         {
