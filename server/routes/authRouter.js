@@ -1,6 +1,6 @@
 import express from 'express'
 import { loginUser, refreshAccessToken, registerUser } from '../controllers/authController.js'
-import { profileUpdate, updateExistingProfile, deleteAvatar} from '../controllers/userController.js'
+import { profileUpdate, updateExistingProfile, deleteAvatar, getUserByUsername} from '../controllers/userController.js'
 import upload from '../middleware/multer.js'
 import { deleteShot, getShots, uploadShot } from '../controllers/shotController.js'
 import { verifyToken } from '../middleware/verifyToken.js'
@@ -20,7 +20,7 @@ userRouter
 .delete('/shots/:id', verifyToken, deleteShot)	
 .put('/user/:id/follow', verifyToken, follow)
 .put('/user/:id/unfollow', verifyToken, unfollow)
-
+.get('/user/:username', getUserByUsername)
 
 
 export default userRouter

@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faAngleDown, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { ShotContext } from '../Context/ShotContext';
 import { AuthContext } from '../Context/AuthContext';
-import { Link, useParams } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";

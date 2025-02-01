@@ -23,7 +23,7 @@ function Navbar() {
   const [isDropdownOpen2, setIsDropdownOpen2] = useState(false);
   const [isMobileExploreOpen, setIsMobileExploreOpen] = useState(false); // New state for mobile explore
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
-  const [isMobileExploreOpen1, setIsMobileExploreOpen1] = useState(false); 
+  // const [isMobileExploreOpen1, setIsMobileExploreOpen1] = useState(false); 
   const [isScrolled, setIsScrolled] = useState(false);
   const {shots} = useContext(ShotContext);
   const location = useLocation();

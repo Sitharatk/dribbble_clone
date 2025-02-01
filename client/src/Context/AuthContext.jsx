@@ -42,7 +42,6 @@ function AuthProvider({ children }) {
   };
 
 
-
   const register = async (name, username, email, password) => {
     try {
       const response = await axios.post(
@@ -81,44 +80,64 @@ function AuthProvider({ children }) {
 
   const followUser = async (userId) => {
     try {
-      const response = await axiosInstance.put(
-        `/auth/user/${userId}/follow`, 
-        {}, // Empty body
+      const response = await axiosInstance.put(`/auth/user/${userId}/follow`);
+      
+      if (response.data.user) {
+        // Make sure we're getting the updated user data from the response
+        const updatedUser = response.data.user;
         
-      );
-  
-      const updatedUser = response.data.user;
-      setAuthData((prev) => ({
-        ...prev,
-        following: updatedUser.following,
-      }));
-      localStorage.setItem('currentUser', JSON.stringify({ ...authData, following: updatedUser.following }));
+        // Update the local state with the new following list
+        setAuthData(prev => ({
+          ...prev,
+          following: updatedUser.following || [...(prev?.following || []), userId]
+        }));
+        
+        // Update localStorage
+        localStorage.setItem('currentUser', JSON.stringify({
+          ...authData,
+          following: updatedUser.following || [...(authData?.following || []), userId]
+        }));
+      }
+      return response.data;
     } catch (error) {
-      console.error('Error following user:', error.response?.data || error);
+      console.error('Error following user:', error);
+      throw error;
     }
   };
   
   const unfollowUser = async (userId) => {
     try {
-      const response = await axiosInstance.put(
-        `/auth/user/${userId}/unfollow`, 
-        {}, // Empty body
-        
-      );
-  
-      const updatedUser = response.data.user;
-      setAuthData((prev) => ({
-        ...prev,
-        following: updatedUser.following,
-      }));
-      localStorage.setItem('currentUser', JSON.stringify({ ...authData, following: updatedUser.following }));
+        const response = await axiosInstance.put(
+            `/auth/user/${userId}/unfollow`
+        );
+
+        if (response.data.user) {
+            const updatedUser = response.data.user;
+            
+            // Update local state
+            setAuthData(prev => ({
+                ...prev,
+                following: prev.following.filter(id => id !== userId)
+            }));
+            
+            // Update localStorage
+            const currentStorage = JSON.parse(localStorage.getItem('currentUser'));
+            const updatedStorage = {
+                ...currentStorage,
+                following: currentStorage.following.filter(id => id !== userId)
+            };
+            localStorage.setItem('currentUser', JSON.stringify(updatedStorage));
+            
+            return response.data;
+        }
     } catch (error) {
-      console.error('Error unfollowing user:', error.response?.data || error);
+        console.error('Error unfollowing user:', error);
+        throw error;
     }
-  };
+};
   
   return (
-    <AuthContext.Provider value={{ authData, login, register, logout ,setAuthData,followUser,unfollowUser}}>
+    <AuthContext.Provider value={{ authData, login, register, logout ,setAuthData,followUser,unfollowUser,  isAuthenticated: !!authData}}>
       {children}
     </AuthContext.Provider>
   );

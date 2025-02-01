@@ -74,7 +74,7 @@ const createToken=(id)=>{
         token,
         refreshToken,
         user: { id: user._id, name: user.name, email: user.email,  profilePicture: user.profilePicture ,location:user.location
-        },
+  ,followers: user.followers, following: user.following     },
       });
     } catch (error) {
       console.error('Error in loginUser:', error.message, error.stack);

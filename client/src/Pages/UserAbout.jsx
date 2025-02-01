@@ -10,7 +10,6 @@ import { AuthContext } from '../Context/AuthContext';
 function UserAbout() {
   const { authData } = useContext(AuthContext);
 
-
   return (
     <>
       <UserDetails />
@@ -33,8 +32,8 @@ function UserAbout() {
             <hr className="w-[500px] border-t-1 border-gray-200" />
           </div>
           <div className="space-x-3">
-            <span className="text-gray-600">0 followers</span>
-            <span className="text-gray-600">0 following</span>
+            <span className="text-gray-600">{authData?.followers?.length || 0} followers</span>
+            <span className="text-gray-600">{authData?.following?.length || 0}  following</span>
           </div>
         </div>
         <div>

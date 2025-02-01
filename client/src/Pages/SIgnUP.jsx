@@ -86,7 +86,7 @@ function SIgnUP() {
        
         </div>
        {/* Right Section  */}
-       {/* Right Section */}
+   
 <div className="flex flex-col justify-center items-center flex-auto p-6 sm:p-10">
   {!isEmailForm ? (
     <div className="w-full max-w-md bg-white flex flex-col items-center">
