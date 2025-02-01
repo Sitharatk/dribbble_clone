@@ -44,7 +44,8 @@ if (!password.trim()) {
   return (
     <div className='flex h-screen'>
         {/* Left Section */}
-        <div className='w-[426px] h-full bg-black px-8 py-16'>
+        <div className="hidden md:block w-[400px] h-full bg-black px-8 py-16">
+
           <div>
             <div className="w-32 h-16">
               <svg xmlns="http://www.w3.org/2000/svg" width="124" height="60" role="img" className="icon" viewBox="0 0 124 60">

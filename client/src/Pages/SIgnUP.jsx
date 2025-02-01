@@ -66,7 +66,9 @@ function SIgnUP() {
   return (
     <div className='flex h-screen'>
        {/* Left Section */}
-              <div className='w-[400px]  h-full bg-black px-8 py-16 '>
+             {/* Left Section */}
+<div className="hidden md:block w-[400px] h-full bg-black px-8 py-16">
+
                
           <p>
             <div className="w-32 h-16">
@@ -85,6 +87,7 @@ function SIgnUP() {
         </div>
        {/* Right Section  */}
        {!isEmailForm ? (
+        <div className="p-8  ">  
         <div className='ml-40  mt-20 w-max bg-white flex-auto mr-80 justify-center items-center'>
            
             <h2 className="font-bold mt-16 text-3xl leading-[29px] font-[Mona Sans, Helvetica Neue, Helvetica, Arial, sans-serif] ">Sign upto Dribble</h2>
@@ -106,6 +109,7 @@ function SIgnUP() {
           <p className="text-center mt-4 mr-14 text-sm text-gray-500 ">Already have an account? <a href="/login" className="text-black underline
              font-medium">Sign In</a></p>
         
+          </div>
           </div>
          ):(
           <>
@@ -184,6 +188,7 @@ function SIgnUP() {
               </a>
             </p>
           </div>
+        
         </>
       )}
     </div>
