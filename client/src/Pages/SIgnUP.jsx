@@ -86,111 +86,132 @@ function SIgnUP() {
        
         </div>
        {/* Right Section  */}
-       {!isEmailForm ? (
-        <div className="p-8  ">  
-        <div className='ml-40  mt-20 w-max bg-white flex-auto mr-80 justify-center items-center'>
-           
-            <h2 className="font-bold mt-16 text-3xl leading-[29px] font-[Mona Sans, Helvetica Neue, Helvetica, Arial, sans-serif] ">Sign upto Dribble</h2>
-          
-                      <button className="w-[410px] mt-10 h-14 font-semibold bg-gray-900 py-2 rounded-full text-white border flex items-center justify-center space-x-2">
-            <img src={google} className="w-5 h-5" alt="Google logo" />
-            <span>Sign up with Google</span>
-          </button>
-          <div className="mr-14 flex items-center justify-center mt-6">
-  <hr className="flex-1 border-t border-gray-200" />
-  <span className="mx-4 text-gray-500">or</span>
-  <hr className="flex-1 border-t border-gray-200" />
+       {/* Right Section */}
+<div className="flex flex-col justify-center items-center flex-auto p-6 sm:p-10">
+  {!isEmailForm ? (
+    <div className="w-full max-w-md bg-white flex flex-col items-center">
+      <h2 className="font-bold mt-10 text-3xl leading-[29px] text-center">
+        Sign up to Dribbble
+      </h2>
+
+      <button className="w-full max-w-[410px] mt-6 h-14 font-semibold bg-gray-900 py-2 rounded-full text-white flex items-center justify-center space-x-2">
+        <img src={google} className="w-5 h-5" alt="Google logo" />
+        <span>Sign up with Google</span>
+      </button>
+
+      <div className="flex items-center justify-center mt-6 w-full">
+        <hr className="flex-1 border-t border-gray-200" />
+        <span className="mx-4 text-gray-500">or</span>
+        <hr className="flex-1 border-t border-gray-200" />
+      </div>
+
+      <button onClick={handleContinueWithEmail} className="w-full max-w-[410px] mt-6 h-14 font-semibold bg-white py-2 rounded-full border flex items-center justify-center space-x-2">
+        <span>Continue with email</span>
+      </button>
+
+      <p className="mt-8 text-gray-700 text-xs text-center">
+        By creating an account you agree with our 
+        <span className="underline"> Terms of Service, Privacy Policy</span>, 
+        and our default <span className="underline">Notification Settings</span>.
+      </p>
+
+      <p className="text-center mt-4 text-sm text-gray-500">
+        Already have an account?{' '}
+        <a href="/login" className="text-black underline font-medium">
+          Sign In
+        </a>
+      </p>
+    </div>
+  ) : (
+    <>
+      <button onClick={handleGoBack} className="w-8 h-8 px-2 mt-5 mr-96 text-black border rounded-full">
+        <FontAwesomeIcon icon={faAngleLeft} />
+      </button>
+
+      <div className="w-full max-w-md bg-white flex flex-col items-center">
+        <h2 className="font-bold mb-5 mt-5 text-3xl text-center">Sign up to Dribbble</h2>
+
+        {errors.global && <p className="text-red-500 text-sm">{errors.global}</p>}
+
+        <div className="flex flex-col sm:flex-row w-full gap-4">
+          <div className="flex flex-col w-full">
+            <label className="block text-sm font-bold text-gray-900">Name</label>
+            <input
+              type="text"
+              id="name"
+              value={formData.name}
+              onChange={handleInputChange}
+              className="w-full h-14 px-4 mt-2 border rounded-xl"
+            />
+            {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+          </div>
+
+          <div className="flex flex-col w-full">
+            <label className="block text-sm font-bold text-gray-900">Username</label>
+            <input
+              type="text"
+              id="username"
+              value={formData.username}
+              onChange={handleInputChange}
+              className="w-full h-14 px-4 mt-2 border rounded-xl"
+            />
+            {errors.username && <p className="text-red-500 text-sm">{errors.username}</p>}
+          </div>
+        </div>
+
+        <label className="block text-sm mt-5 font-bold text-gray-900 w-full">Email</label>
+        <input
+          type="email"
+          id="email"
+          value={formData.email}
+          onChange={handleInputChange}
+          className="w-full h-14 px-4 mt-2 border rounded-xl"
+        />
+        {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+
+        <label className="block text-sm mt-5 font-bold text-gray-900 w-full">Password</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="6+ characters"
+          value={formData.password}
+          onChange={handleInputChange}
+          className="w-full h-14 px-4 mt-2 border rounded-xl"
+        />
+        {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+
+        <div className="mt-6 flex items-center w-full">
+          <input
+            type="checkbox"
+            id="terms"
+            checked={isAgreed}
+            onChange={handleCheckboxChange}
+            className="w-5 h-5"
+          />
+          <label htmlFor="terms" className="ml-3 text-gray-600 text-sm">
+            I agree with Dribbble&apos;s <span className="underline">Terms of Service</span> and 
+            <span className="underline"> Privacy Policy</span>.
+          </label>
+        </div>
+
+        <button
+          onClick={handleSubmit}
+          className="w-full h-14 mt-6 bg-black text-white py-2 rounded-full hover:bg-gray-700 transition duration-200"
+        >
+          Create Account
+        </button>
+
+        <p className="text-center mt-4 text-sm text-gray-500">
+          Already have an account?{' '}
+          <a href="/login" className="text-black underline font-medium">
+            Sign In
+          </a>
+        </p>
+      </div>
+    </>
+  )}
 </div>
-<button onClick={handleContinueWithEmail} className="w-[410px] mt-7 h-14 font-semibold bg-white py-2 rounded-full  border flex items-center justify-center space-x-2">
-          
-            <span>Continue with email</span>
-          </button>
-          <p className='mt-14 text-gray-700 text-xs'>By creating an account you agree with our<span className='underline'> Terms of Service, Privacy Policy,<br/></span ><span className='ml-24'> and our default<span className='underline'> Notification Settings</span></span>.</p>
-          <p className="text-center mt-4 mr-14 text-sm text-gray-500 ">Already have an account? <a href="/login" className="text-black underline
-             font-medium">Sign In</a></p>
-        
-          </div>
-          </div>
-         ):(
-          <>
-          <button onClick={handleGoBack} className="w-4 h-8 px-4 mt-5 ml-5 text-black border rounded-full">
-            <FontAwesomeIcon icon={faAngleLeft} />
-          </button>
-          <div className="ml-5 w-max bg-white flex-auto justify-center items-center">
-            <h2 className="font-bold mb-5 mt-5 text-3xl">Sign up to Dribbble</h2>
-            {errors.global && <p className="text-red-500 text-sm">{errors.global}</p>}
-            <div className="flex space-x-6">
-              <div>
-                <label className="block text-sm font-bold text-gray-900">Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  className="w-[200px] h-14 px-4 mt-2 border rounded-xl"
-                />
-                {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
-              </div>
-              <div>
-                <label className="block text-sm font-bold text-gray-900">Username</label>
-                <input
-                  type="text"
-                  id="username"
-                  value={formData.username}
-                  onChange={handleInputChange}
-                  className="w-[200px] h-14 px-4 mt-2 border rounded-xl"
-                />
-                 {errors.username && <p className="text-red-500 text-sm">{errors.username}</p>}
-              </div>
-            </div>
-            <label className="block text-sm mt-5 font-bold text-gray-900">Email</label>
-            <input
-              type="email"
-              id="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              className="w-[432px] h-14 px-4 mt-2 border rounded-xl"
-            />
-            {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
-            <label className="block text-sm mt-5 font-bold text-gray-900">Password</label>
-            <input
-              type="password"
-              id="password"
-              placeholder="6+ characters"
-              value={formData.password}
-              onChange={handleInputChange}
-              className="w-[432px] h-14 px-4 mt-2 border rounded-xl"
-            />
-              {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
-            <div className="mt-8 flex items-center">
-              <input
-                type="checkbox"
-                id="terms"
-                checked={isAgreed}
-                onChange={handleCheckboxChange}
-                className="w-5 h-5 text-pink-500"
-              />
-              <label htmlFor="terms" className="ml-3 text-gray-600 text-sm">
-                I agree with Dribbble&apos;s <span className="underline">Terms of Service</span> and{' '}
-                <span className="underline">Privacy Policy</span>.
-              </label>
-            </div>
-            <button
-              onClick={handleSubmit}
-              className="w-[432px] h-14 mt-9 bg-black text-white py-2 rounded-full hover:bg-gray-700 transition duration-200"
-            >
-              Create Account
-            </button>
-            <p className="text-center mt-4 text-sm text-gray-500 mr-96">
-              Already have an account?{' '}
-              <a href="/login" className="text-black underline font-medium">
-                Sign In
-              </a>
-            </p>
-          </div>
-        
-        </>
-      )}
+
     </div>
   );
 }

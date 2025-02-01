@@ -62,9 +62,10 @@ if (!password.trim()) {
         </div>
 
         {/* Right Section (Login Form) */}
-        <div className='ml-40 w-max bg-white flex-auto mr-80 justify-center items-center'>
+        <div className="flex flex-col justify-center items-center flex-auto p-6 sm:p-10">
+
         <div>
-          <h2 className="font-bold mt-16 text-3xl leading-[29px] font-[Mona Sans, Helvetica Neue, Helvetica, Arial, sans-serif]">Sign into Dribble</h2>
+          <h2 className="font-bold mt-3 text-3xl leading-[29px] font-[Mona Sans, Helvetica Neue, Helvetica, Arial, sans-serif]">Sign into Dribble</h2>
 
           <button className="w-[410px] mt-10 h-14 font-semibold text-black py-2 rounded-full border flex items-center justify-center space-x-2">
             <img src={google} className="w-5 h-5" alt="Google logo" />

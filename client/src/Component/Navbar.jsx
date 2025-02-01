@@ -114,7 +114,7 @@ function Navbar() {
 
   return (
     <nav className={`bg-white z-40 ${isScrolled ? 'fixed top-0 left-0 w-full' : 'relative'} transition-all duration-300 ease-in-out`}>
-    <div className="flex justify-between items-center py-6 px-9">
+    <div className="flex justify-between items-center py-6 px-4 sm:px-9">
     <div className="flex items-center space-x-4">
           <div className=" lg:hidden">
             <button className="p-2 text-black hover:text-gray-400 focus:outline-none" onClick={toggleMenu}>
