@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { ShotContext } from "../Context/ShotContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
-import axios from "axios";
+
 
 function Others() {
     const { username } = useParams(); 
@@ -166,7 +166,7 @@ if (profile) {
         </div>
       </div>
     ) : (
-      <p>Loading user profile...</p>
+      <p>Loading user profile..</p>
     )}
   </div>
 );

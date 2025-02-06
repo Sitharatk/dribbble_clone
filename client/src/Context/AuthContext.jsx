@@ -91,8 +91,7 @@ function AuthProvider({ children }) {
           ...prev,
           following: updatedUser.following || [...(prev?.following || []), userId]
         }));
-        
-        // Update localStorage
+
         localStorage.setItem('currentUser', JSON.stringify({
           ...authData,
           following: updatedUser.following || [...(authData?.following || []), userId]
@@ -113,14 +112,12 @@ function AuthProvider({ children }) {
 
         if (response.data.user) {
             const updatedUser = response.data.user;
-            
-            // Update local state
+
             setAuthData(prev => ({
                 ...prev,
                 following: prev.following.filter(id => id !== userId)
             }));
-            
-            // Update localStorage
+        
             const currentStorage = JSON.parse(localStorage.getItem('currentUser'));
             const updatedStorage = {
                 ...currentStorage,
