@@ -10,12 +10,10 @@ export const uploadShot = async (req, res) => {
 
     const { title, tags } = req.body;
 
-    // Validate title
     if (!title) {
         return res.status(400).json({ message: 'Title is required' });
     }
 
-    // Validate if image file exists
     if (!req.file) {
         return res.status(400).json({ message: 'Image is required' });
     }
