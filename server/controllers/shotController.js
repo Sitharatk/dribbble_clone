@@ -264,3 +264,25 @@ export const shotViews = async (req, res) => {
         });
     }
 };
+
+export const commment= async (req, res) => {
+    const { shotId } = req.params;
+    const {comment}= req.body;
+
+    try {
+        const shot = await shotModel.findById(shotId);
+        if (!shot) {
+            return res.status(404).json({ message: 'Shot not found' }); 
+        }
+        shot.comments.push(comment);
+        await shot.save();
+        res.status(200).json({ message: 'Comment added successfully', shot });
+    } catch (error) {
+        console.error('Error adding comment:', error);
+        res.status(500).json({  
+            message: 'Error adding comment',    
+
+            error: error.message,
+        });
+    }
+};
