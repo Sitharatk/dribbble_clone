@@ -286,3 +286,23 @@ export const commment= async (req, res) => {
         });
     }
 };
+
+export const deleteComment = async (req, res) => {
+    const { shotId, commentId } = req.params;
+
+    try {
+        const shot = await shotModel.findById(shotId);
+        if (!shot) {
+            return res.status(404).json({ message: 'Shot not found' });
+        }
+        shot.comments = shot.comments.filter(comment => comment._id !== commentId);
+        await shot.save();
+        res.status(200).json({ message: 'Comment deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting comment:', error);
+        res.status(500).json({
+            message: 'Error deleting comment',
+            error: error.message,
+        });
+    }    
+};
