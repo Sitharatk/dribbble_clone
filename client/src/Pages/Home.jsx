@@ -40,13 +40,15 @@ function Home() {
         Explore work from the most talented and accomplished designers <br className="hidden md:block" /> ready to take on your next project
       </h2>
    
-      <div className="mt-8 md:mt-12 flex items-center bg-gray-100 p-[7.5px] hover:p-[5.5px] w-full max-w-[90%] md:max-w-lg border-gray-100 hover:bg-white rounded-full hover:border-2 hover:border-pink-100">
+      <div className="mt-4 md:mt-8 flex items-center bg-gray-100 p-2 hover:p-1.5 w-full max-w-sm mx-auto md:max-w-lg border-2 border-transparent hover:border-pink-100 hover:bg-white rounded-full transition-all">
+
         <input
           type="text"
           placeholder="What are you looking for?"
-          className="flex-grow bg-transparent outline-none px-4 text-gray-700 placeholder-gray-500"
-        />
-        <button className="text-gray-700 font-semibold px-2 md:px-4 py-1 mr-2 space-x-1 hover:bg-white">
+          className="flex-1 min-w-0 bg-transparent outline-none px-2 md:px-4 text-sm md:text-base text-gray-700 placeholder-gray-500"
+          />
+  <button className=" md:flex items-center text-gray-700 font-semibold px-2 md:px-4 py-1 space-x-1 hover:bg-white">
+  
           <span>Shots</span>
           <FontAwesomeIcon icon={faAngleDown} className="text-xs" />
         </button>
