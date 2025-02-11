@@ -245,22 +245,22 @@ function Navbar() {
         </Link>
       </div>
 
-      <div className={`flex-grow max-w-lg  mb-5 mx-8 ${(isScrolled || !isHomePage) ? 'visible' : 'hidden'}`}>
-        <div className="flex  items-center bg-gray-100 p-2 rounded-full border-gray-100 hover:bg-white hover:border-2 hover:border-pink-100">
-          <input
-            type="text"
-            placeholder="What are you looking for?"
-            className="flex-grow bg-transparent outline-none px-4 text-gray-700 placeholder-gray-500"
-          />
-          <button className="text-gray-700 font-semibold px-4 py-1">
-            <span>Shots</span>
-            <FontAwesomeIcon icon={faAngleDown} className="text-xs ml-1" />
-          </button>
-          <button className="bg-pink-600 text-white rounded-full py-2 px-3 hover:bg-pink-200">
-            <FontAwesomeIcon icon={faSearch} className="text-lg" />
-          </button>
-        </div>
-      </div>
+      <div className={`flex-grow max-w-lg mx-8 hidden md:block ${(isScrolled || !isHomePage) ? 'visible' : 'hidden'}`}>
+  <div className="flex items-center bg-gray-100 p-2 rounded-full border-gray-100 hover:bg-white hover:border-2 hover:border-pink-100">
+    <input
+      type="text"
+      placeholder="What are you looking for?"
+      className="flex-grow bg-transparent outline-none px-4 text-gray-700 placeholder-gray-500"
+    />
+    <button className="text-gray-700 font-semibold px-4 py-1">
+      <span>Shots</span>
+      <FontAwesomeIcon icon={faAngleDown} className="text-xs ml-1" />
+    </button>
+    <button className="bg-pink-600 text-white rounded-full py-2 px-3 hover:bg-pink-500">
+      <FontAwesomeIcon icon={faSearch} className="text-lg" />
+    </button>
+  </div>
+</div>
 <div
   className={`hidden lg:flex space-x-6 text-gray-800 ${
     isScrolled ? 'ml-0' : 'mr-96'
