@@ -37,7 +37,7 @@ const ResponsiveNav = ({ navItems }) => {
       </div>
 
       {/* Mobile Navigation with Swiper - Visible only on mobile */}
-      <div className="relative w-full md:hidden">
+      <div className="relative w-full md:hidden  ">
         <Swiper
           modules={[Navigation]}
           navigation={{
@@ -54,7 +54,7 @@ const ResponsiveNav = ({ navItems }) => {
             <SwiperSlide key={item.name} className="!w-auto">
               <Link to={item.path}>
                 <button
-                  className={`text-gray-600 hover:text-gray-900 font-medium text-[15px] whitespace-nowrap px-4 py-2 rounded-full ${
+                  className={`text-gray-600  hover:text-gray-900 font-medium text-[15px] whitespace-nowrap px-4 py-2 rounded-full ${
                     location.pathname === item.path ? 'bg-pink-100' : ''
                   }`}
                 >
@@ -102,7 +102,7 @@ const UserDetails = () => {
   }, [isDropdownOpen]);
 
   return (
-    <div className="mt-32">
+    <div className="mt-32 px-8">
       <div className="flex items-center justify-center space-x-10 p-5">
         <div>
           <img
@@ -131,7 +131,7 @@ const UserDetails = () => {
       </div>
 
       {/* New ResponsiveNav component */}
-      <ResponsiveNav navItems={navItems} />
+      <ResponsiveNav navItems={navItems}  />
 
       <div className="flex justify-center mb-14">
         <hr className="w-full max-w-[1210px] border-t-1 border-gray-200" />
