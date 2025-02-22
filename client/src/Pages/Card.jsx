@@ -1,7 +1,7 @@
-import  { useState, useContext } from 'react'
+import  { useState, useContext ,useEffect} from 'react'
 import { Link } from 'react-router-dom'
 
-import { AuthContext } from '../Context/AuthContext'
+import { AuthContext  } from '../Context/AuthContext'
 import { ShotContext } from '../Context/ShotContext';
 
 function Card({shot}) {
@@ -9,6 +9,10 @@ function Card({shot}) {
   const { authData } = useContext(AuthContext);
   const [likes, setLikes] = useState(shot?.likes || []);
   const userId = authData?.id || null;
+  
+  useEffect(() => {
+    setLikes(shot?.likes || []);
+  }, [shot?.likes]);
 
   const handleLikeToggle = async () => {
     if (!userId) {
@@ -18,14 +22,21 @@ function Card({shot}) {
 
     try {
       if (likes.includes(userId)) {
-        await unlikeShot(shot?._id);
-        setLikes(likes.filter((id) => id !== userId));
+        const response = await unlikeShot(shot?._id);
+        // Only update state if server operation was successful
+        if (response.message === 'Like deleted successfully') {
+          setLikes(likes.filter((id) => id !== userId));
+        }
       } else {
-        await likeShot(shot?._id);
-        setLikes([...likes, userId]);
+        const response = await likeShot(shot?._id);
+        if (response.success) {
+          setLikes([...likes, userId]);
+        }
       }
     } catch (error) {
       console.error('Like action failed', error);
+      // Revert to original state if operation failed
+      setLikes(shot?.likes || []);
     }
   };
 

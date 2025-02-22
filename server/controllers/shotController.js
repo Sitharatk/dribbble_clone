@@ -181,29 +181,40 @@ export const updateShot = async (req, res) => {
 };
 export const deleteLike = async (req, res) => {
     const { shotId } = req.params;
-
+    const userId = req.user.id;
+  
     try {
-        const shot = await shotModel.findById(shotId);
-        if (!shot) {
-            return res.status(404).json({ message: 'Shot not found' });
+      // Use findOneAndUpdate to atomically update the document
+      const updatedShot = await shotModel.findOneAndUpdate(
+        { 
+          _id: shotId,
+          likes: userId  // Only update if the user's ID is in the likes array
+        },
+        {
+          $pull: { likes: userId }  // Remove the user's ID from likes array
+        },
+        {
+          new: true  // Return the updated document
         }
-        if (!shot.likes.includes(req.user.id)) {
-            return res.status(200).json({ message: 'Like not found', shot });
-        }
-        
-        // Remove the user's ID from the likes array
-        shot.likes = shot.likes.filter(id => id !== req.user.id);
-        await shot.save();
-
-        res.status(200).json({ message: 'Like deleted successfully' });
+      );
+  
+      if (!updatedShot) {
+        return res.status(404).json({ message: 'Shot not found or like already removed' });
+      }
+  
+      res.status(200).json({
+        message: 'Like deleted successfully',
+        shot: updatedShot
+      });
+  
     } catch (error) {
-        console.error('Error deleting like:', error);
-        res.status(500).json({
-            message: 'Error deleting like',
-            error: error.message,
-        });
+      console.error('Error deleting like:', error);
+      res.status(500).json({
+        message: 'Error deleting like',
+        error: error.message
+      });
     }
-};
+  };
 export const addToCollections = async (req, res) => {
     const { shotId } = req.params;
 

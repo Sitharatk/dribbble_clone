@@ -120,33 +120,33 @@ const [allShots, setAllShots] = useState([]);
     };
     
     const unlikeShot = async (shotId) => {
-      
-  
       try {
-          const response = await axiosInstance.delete( `/post/shots/${shotId}/like`,   );
-  
-          setShots(prevShots => 
-              prevShots.map(shot => 
-                  shot._id === shotId 
-                      ? { ...shot, likes: shot.likes.filter(id => id !== authData.id) } 
-                      : shot
-              )
+        const response = await axiosInstance.delete(`/post/shots/${shotId}/like`);
+        
+        if (response.data.message === 'Like deleted successfully') {
+          setShots(prevShots =>
+            prevShots.map(shot =>
+              shot._id === shotId
+                ? { ...shot, likes: shot.likes.filter(id => id !== authData.id) }
+                : shot
+            )
           );
-  
-          setAllShots(prevShots => 
-              prevShots.map(shot => 
-                  shot._id === shotId 
-                      ? { ...shot, likes: shot.likes.filter(id => id !== authData.id) } 
-                      : shot
-              )
+    
+          setAllShots(prevShots =>
+            prevShots.map(shot =>
+              shot._id === shotId
+                ? { ...shot, likes: shot.likes.filter(id => id !== authData.id) }
+                : shot
+            )
           );
-  
-          return response.data;
+        }
+    
+        return response.data;
       } catch (error) {
-          console.error('Error unliking shot:', error);
-          throw error;
+        console.error('Error unliking shot:', error);
+        throw error;
       }
-  };
+    };
   
   const shotViews = async (shotId) => {
     try {

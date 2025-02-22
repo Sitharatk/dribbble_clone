@@ -245,7 +245,7 @@ function Navbar() {
         </Link>
       </div>
 
-      <div className={`flex-grow max-w-lg  mb-5 mx-8 ${(isScrolled || !isHomePage) ? 'visible' : 'hidden'}`}>
+      <div className={`flex-grow max-w-lg mb-5 mx-8 ml-14 hidden ${(isScrolled || !isHomePage) ? 'md:flex' : 'hidden'}`}>
         <div className="flex  items-center bg-gray-100 p-2 rounded-full border-gray-100 hover:bg-white hover:border-2 hover:border-pink-100">
           <input
             type="text"
@@ -267,7 +267,7 @@ function Navbar() {
   }`}
 >
   <div
-    className="relative"
+    className="relative "
     onClick={() =>setIsDropdownOpen((prev) => !prev)}
   >
     <button className="hover:text-gray-400 flex items-center font-semibold">
@@ -318,7 +318,7 @@ function Navbar() {
   </div>
 
   <div
-    className="relative"
+    className="relative  "
     onClick={() =>setIsDropdownOpen2((prev) => !prev)}
   >
     <button className="hover:text-gray-400 flex items-center font-semibold">
@@ -351,8 +351,8 @@ function Navbar() {
     )}
   </div>
 
-  <button className="hover:text-gray-400 font-semibold">Find Jobs</button>
- <Link to='/blog'> <button className="hover:text-gray-400 font-semibold">Blog</button></Link>
+  <button className="hover:text-gray-400 font-semibold mr-5 ">Find Jobs</button>
+ <Link to='/blog'> <button className="hover:text-gray-400 font-semibold mr-8">Blog</button></Link>
 </div>
 
 <div className="flex items-center mt-2">

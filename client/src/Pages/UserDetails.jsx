@@ -2,39 +2,105 @@ import { useContext, useEffect, useState} from 'react';
 import { AuthContext } from '../Context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
+
 import { Link, useLocation } from 'react-router-dom';
- 
-function UserDetails() {
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+
+const ResponsiveNav = ({ navItems }) => {
+  const location = useLocation();
+  const [isStart, setIsStart] = useState(true);
+  const [isEnd, setIsEnd] = useState(false);
+
+  const handleSlideChange = (swiper) => {
+    setIsStart(swiper.isBeginning);
+    setIsEnd(swiper.isEnd);
+  };
+
+  return (
+    <>
+      {/* Desktop Navigation - Hidden on mobile */}
+      <div className="hidden md:flex space-x-2 py-4 font-medium">
+        {navItems.map((item) => (
+          <Link to={item.path} key={item.name}>
+            <button
+              className={`text-gray-600 hover:text-gray-900 px-4 py-2 rounded-full text-[15px] ${
+                location.pathname === item.path ? 'bg-pink-100' : ''
+              }`}
+            >
+              {item.name}
+            </button>
+          </Link>
+        ))}
+      </div>
+
+      {/* Mobile Navigation with Swiper - Visible only on mobile */}
+      <div className="relative w-full md:hidden">
+        <Swiper
+          modules={[Navigation]}
+          navigation={{
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          }}
+          slidesPerView="auto"
+          spaceBetween={32}
+          className="!static"
+          onSlideChange={handleSlideChange}
+          onSwiper={handleSlideChange}
+        >
+          {navItems.map((item) => (
+            <SwiperSlide key={item.name} className="!w-auto">
+              <Link to={item.path}>
+                <button
+                  className={`text-gray-600 hover:text-gray-900 font-medium text-[15px] whitespace-nowrap px-4 py-2 rounded-full ${
+                    location.pathname === item.path ? 'bg-pink-100' : ''
+                  }`}
+                >
+                  {item.name}
+                </button>
+              </Link>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    </>
+  );
+};
+
+// Update your UserDetails component
+const UserDetails = () => {
   const { authData } = useContext(AuthContext);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  const location = useLocation();
   
   const navItems = [
     { name: 'Work', path: '/userwork' },
-    { name: 'Services',path: '/services' },
-    { name: 'Boosted Shots' },
-    { name: 'Collections',path: '/collections' },
-    { name: 'Liked Shots' ,path: '/likes'},
+    { name: 'Services', path: '/services' },
+    { name: 'Boosted Shots', path: '/boosted' },
+    { name: 'Collections', path: '/collections' },
+    { name: 'Liked Shots', path: '/likes' },
     { name: 'About', path: '/userabout' },
   ];
 
-useEffect(() => {
+  const toggleDropdown = () => {
+    setIsDropdownOpen((prev) => !prev);
+  };
+
+  useEffect(() => {
     let dropdownTimeout;
-  
     if (isDropdownOpen) {
       dropdownTimeout = setTimeout(() => {
         setIsDropdownOpen(false);
-      }, 1500); 
+      }, 1500);
     }
-  
     return () => {
       if (dropdownTimeout) {
         clearTimeout(dropdownTimeout);
       }
     };
   }, [isDropdownOpen]);
-  
+
   return (
     <div className="mt-32">
       <div className="flex items-center justify-center space-x-10 p-5">
@@ -54,55 +120,24 @@ useEffect(() => {
                 Edit Profile
               </button>
             </Link>
-            <span
-    className="relative"
-    onClick={() =>setIsDropdownOpen((prev) => !prev)}
-  >
-            <button className="border py-2 px-3 rounded-full mt-2 font-semibold">
+            <button
+              onClick={toggleDropdown}
+              className="border py-2 px-3 rounded-full mt-2 font-semibold"
+            >
               <FontAwesomeIcon icon={faEllipsis} />
-
             </button>
-            {isDropdownOpen && (
-                  <div className="absolute left-0 top-full mt-4 p-2 w-60 text-sm bg-white  shadow-xl rounded-md z-10 border border-gray-200">
-                    <ul
-                      className="flex flex-col space-y-4 p-2 text-gray-500"
-                   >
-                      <li className=" hover:text-gray-600 cursor-pointer">
-             
-                     Add or remove from lists...
-                      </li>
-                      <Link to='/editprofile'><li className=" hover:text-gray-600 cursor-pointer">
-             
-          Edit your account settings
-           </li></Link>
-                    
-                    </ul>
-                  </div>
-                )}
-            </span>
           </span>
         </div>
       </div>
-      <div className="flex space-x-3 py-12 px-24 font-semibold">
-        {navItems.map((item) => (
-          <Link to={item.path} key={item.name}>
-            <button
-              className={`py-2 px-5 rounded-full ${
-                location.pathname === item.path ? 'bg-pink-100' : 'bg-transparent'
-              }`}
-            >
-              {item.name}
-            </button>
-          </Link>
-        ))}
-      </div>
+
+      {/* New ResponsiveNav component */}
+      <ResponsiveNav navItems={navItems} />
+
       <div className="flex justify-center mb-14">
-        <hr className="w-[1210px] border-t-1 border-gray-200" />
+        <hr className="w-full max-w-[1210px] border-t-1 border-gray-200" />
       </div>
     </div>
   );
-}
+};
 
 export default UserDetails;
-
-
