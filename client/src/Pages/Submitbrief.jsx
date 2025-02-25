@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 function Submitbrief() {
   return (
-    <div className='mt-16 md:mt-32 px-4 md:px-0 flex items-center justify-center bg-pink-50'>
+    <div className='mt-20 md:mt-32 px-4 md:px-0 flex items-center justify-center bg-pink-50'>
       <div className='w-full max-w-[650px]'>
         <h1 className='text-2xl md:text-[35px] font-roboto font-extralight mt-6 md:mt-9 text-center md:text-left'>
           Start Your Project with Expert Support
