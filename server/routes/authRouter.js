@@ -20,7 +20,7 @@ userRouter
 .delete('/shots/:id', verifyToken, deleteShot)	
 .put('/user/:id/follow', verifyToken, follow)
 .put('/user/:id/unfollow', verifyToken, unfollow)
-.get('/user/:username', getUserByUsername)
+.get('/users/:username', getUserByUsername)
 
 
 export default userRouter

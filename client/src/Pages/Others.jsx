@@ -3,6 +3,8 @@ import { Link, useParams } from "react-router-dom";
 import { ShotContext } from "../Context/ShotContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
+import axios from "axios";
+import axiosInstance from "../../utilities/axiosInstance";
 
 
 function Others() {
@@ -10,22 +12,24 @@ function Others() {
     const{allShots}=useContext(ShotContext)
       // State to store the user's profile data and posts
   const [userProfile, setUserProfile] = useState(null);
+  const [userProfile1, setUserProfile1] = useState(null);
   const [userPosts, setUserPosts] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
 
-  // useEffect(() => {
-  //   const fetchUserProfile = async () => {
-  //     try {
-  //       const response = await axios.get(`https://your-api.com/api/users/${username}`);
-  //       setUserProfile(response.data); // Set user profile data
-  //     } catch (error) {
-  //       console.error("Error fetching user profile:", error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const response = await axiosInstance.get(`/post/users/${username}`);
+        setUserProfile1(response.data); 
+        console.log('data',response.data); // Set user profile data
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+      }
+    };
 
-  //   fetchUserProfile();
-  // }, [username]);
+    fetchUserProfile();
+  }, [username]);
 
   useEffect(() => {
 
@@ -34,6 +38,7 @@ function Others() {
 if (profile) {
       setUserProfile(profile);
       const posts = allShots.filter((shot) => shot.user.username === username);
+   
       setUserPosts(posts);
     }
   }, [username, allShots]);
