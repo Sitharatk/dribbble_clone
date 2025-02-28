@@ -20,7 +20,7 @@ function Others() {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await axiosInstance.get(`/post/users/${username}`);
+        const response = await axiosInstance.get(`/auth/users/${username}`);
         setUserProfile1(response.data); 
         console.log('data',response.data); // Set user profile data
       } catch (error) {
@@ -85,9 +85,9 @@ if (profile) {
         <h1 className="text-2xl font-semibold mt-1">{userProfile.name}</h1>
         {/* Display their posts */}
         <div className="flex space-x-8 mt-2 text-gray-600">
-            <p>{userProfile.followers ?.length ||0} followers</p>
-            <p>{userProfile.following?.length || 0} following</p>
-            <p>{userProfile.likes?.length || 0} likes</p>
+            <p>{userProfile1.followers ?.length ||0} followers</p>
+            <p>{userProfile1.following?.length || 0} following</p>
+            <p>{userProfile1.likes?.length || 0} likes</p>
         </div>
         <div className="flex space-x-4 mt-4 items-center">
   <button className="px-6 text-sm py-3 font-semibold rounded-full bg-black text-white">
