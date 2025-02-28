@@ -1,6 +1,6 @@
 import userModel from "../models/userModel.js";
 import cloudinary from "../config/cloudinary.js";
-
+import shotModel from "../models/shotModel.js";
 export const profileUpdate = async (req, res, next) => {
   const { id } = req.params;
   const { location } = req.body;
@@ -114,13 +114,35 @@ export const getUserByUsername = async (req, res) => {
   const { username } = req.params;
 
   try {
+    // Find the user
     const user = await userModel.findOne({ username })
-    .populate("followers", "name username profilePicture") 
-    .populate("following", "name username profilePicture");
+      .populate("followers", "name username profilePicture") 
+      .populate("following", "name username profilePicture");
+    
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    res.status(200).json( user );
+
+    // Find all shots created by this user
+    const userShots = await shotModel.find({ user: user._id });
+    
+    // Calculate total likes received across all shots
+    const totalLikesReceived = userShots.reduce((total, shot) => {
+      return total + (shot.likes ? shot.likes.length : 0);
+    }, 0);
+
+    // Get the user's liked shots count
+    const likedShotsCount = user.likedShots ? user.likedShots.length : 0;
+
+    // Return user data with the additional metrics
+    const userResponse = {
+      ...user.toObject(),
+      totalLikesReceived,
+      shotsCount: userShots.length,
+      likedShotsCount
+    };
+
+    res.status(200).json(userResponse);
   } catch (error) {
     console.error('Error fetching user by username:', error);
     res.status(500).json({
@@ -128,4 +150,4 @@ export const getUserByUsername = async (req, res) => {
       error: error.message
     });
   }
-}
+};

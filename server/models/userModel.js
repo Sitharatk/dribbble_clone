@@ -23,6 +23,7 @@ const userSchema = new mongoose.Schema({
         ref: 'Shot',
         default: []
     }],
+    
     createdAt: { type: Date, default: Date.now },
 }, {
    
