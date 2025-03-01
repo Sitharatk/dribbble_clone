@@ -104,8 +104,6 @@ const handleFollowToggle = async () => {
   }, [isDropdownOpen]);
   const navItems = [
     { name: 'Work' },
-    { name: 'Services' },
-    { name: 'Boosted Shots' },
     { name: 'Collections' },
     { name: 'Liked Shots' },
     { name: 'About', path: '/userabout' },
