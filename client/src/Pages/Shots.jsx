@@ -2,12 +2,14 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { ShotContext } from "../Context/ShotContext";
 import { AuthContext } from "../Context/AuthContext";
+import ContactModal from "../Pages/ContactModal";
 
 const ShotDetail = () => {
   const { id } = useParams();
   const { loading, deleteShot, allShots } = useContext(ShotContext);
   const { authData, followUser, unfollowUser } = useContext(AuthContext);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const shot = allShots && id ? allShots.find((s) => s._id === id) : null;
   const navigate = useNavigate();
 
@@ -51,6 +53,16 @@ const handleFollowToggle = async () => {
       setIsLoading(false);
   }
 };
+
+const openContactModal = () => {
+  setIsContactModalOpen(true);
+};
+
+
+const closeContactModal = () => {
+  setIsContactModalOpen(false);
+};
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -161,7 +173,7 @@ const handleFollowToggle = async () => {
                   </svg>
                 </button>
               </div>
-              <button className="px-3 text-sm py-2 font-semibold rounded-full bg-black text-white">
+              <button   onClick={openContactModal} className="px-3 text-sm py-2 font-semibold rounded-full bg-black text-white">
                 Get in touch
               </button>
             </div>
@@ -223,7 +235,13 @@ const handleFollowToggle = async () => {
 }
       </div>
       </div>
-      
+      {shot.user && (
+          <ContactModal 
+            isOpen={isContactModalOpen}
+            onClose={closeContactModal}
+            user={shot.user}
+          />
+        )}
     </div>
   );
 };

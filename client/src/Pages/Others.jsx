@@ -6,7 +6,7 @@ import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
 
 import axiosInstance from "../../utilities/axiosInstance";
 import { AuthContext  } from "../Context/AuthContext";
-
+import ContactModal from "../Pages/ContactModal";
 
 function Others() {
     const { username } = useParams(); 
@@ -20,6 +20,7 @@ function Others() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -102,6 +103,16 @@ const handleFollowToggle = async () => {
       }
     };
   }, [isDropdownOpen]);
+
+  const openContactModal = () => {
+    setIsContactModalOpen(true);
+};
+
+// Function to close contact modal
+const closeContactModal = () => {
+    setIsContactModalOpen(false);
+};
+
   const navItems = [
     { name: 'Work' },
     { name: 'Collections' },
@@ -132,7 +143,7 @@ const handleFollowToggle = async () => {
             <p>{userProfile1.totalLikesReceived || 0} likes</p>
         </div>
         <div className="flex space-x-4 mt-4 items-center">
-  <button className="px-6 text-sm py-3 font-semibold rounded-full bg-black text-white">
+  <button        onClick={openContactModal} className="px-6 text-sm py-3 font-semibold rounded-full bg-black text-white">
     Get in touch
   </button>
   {authData && authData._id !== userProfile._id && (
@@ -221,6 +232,13 @@ const handleFollowToggle = async () => {
             ))}
           </div>
         </div>
+        {userProfile && (
+                        <ContactModal 
+                            isOpen={isContactModalOpen}
+                            onClose={closeContactModal}
+                            user={userProfile}
+                        />
+                    )}
       </div>
     ) : (
       <p>Loading user profile..</p>
