@@ -30,6 +30,8 @@ function Navbar() {
   const isHomePage = location.pathname === '/';
   const [isOpen, setIsOpen] = useState(false);
   const [isMobileHireOpen, setIsMobileHireOpen] = useState(false);
+  const [isMessagesDropdownOpen, setIsMessagesDropdownOpen] = useState(false);
+
 
   useEffect(() => {
     if (isHomePage) {
@@ -104,6 +106,21 @@ function Navbar() {
     setIsOpen(!isOpen);
   };
 
+  useEffect(() => {
+    let messagesDropdownTimeout;
+  
+    if (isMessagesDropdownOpen) {
+      messagesDropdownTimeout = setTimeout(() => {
+        setIsMessagesDropdownOpen(false);
+      }, 3000); 
+    }
+  
+    return () => {
+      if (messagesDropdownTimeout) {
+        clearTimeout(messagesDropdownTimeout);
+      }
+    };
+  }, [isMessagesDropdownOpen]);
 
   const handleDropdownClick = (tag) => {
     navigate(`/posts/${tag.toLowerCase()}`);
@@ -359,9 +376,28 @@ function Navbar() {
 {authData ? (
         
             <>
-             <button className="relative mx-4">
-                <FontAwesomeIcon icon={faEnvelope} className="text-gray-800 text-xl" />
-              </button>
+           <button 
+  className="relative mx-4"
+  onClick={() => setIsMessagesDropdownOpen(!isMessagesDropdownOpen)}
+>
+  <FontAwesomeIcon icon={faEnvelope} className="text-gray-800 text-xl" />
+  
+  {isMessagesDropdownOpen && (
+    <div className="absolute right-0 top-full mt-3 p-4 w-80 bg-white shadow-xl rounded-md z-10 border border-gray-100">
+      <div className="text-lg font-bold mb-4">Your Messages</div>
+      <div className="w-full h-px bg-gray-200 my-4"></div>
+      <div className="py-6 text-center">
+        <p className="text-gray-600 mb-8">You have no messages</p>
+        <div className="w-full h-px bg-gray-200 my-4"></div>
+        <Link to="/messages">
+          <button className="bg-pink-500 text-white py-2 px-4 rounded-full hover:bg-pink-600 transition duration-300">
+            View All Messages
+          </button>
+        </Link>
+      </div>
+    </div>
+  )}
+</button>
               <button className="relative mx-4">
                 <FontAwesomeIcon icon={faBell} className="text-gray-800 text-xl" />
                 <span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>

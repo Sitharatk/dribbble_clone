@@ -21,6 +21,7 @@ import Others from '../Pages/Others'
 import Tags from '../Pages/Tags'
 import Collections from '../Pages/Collections'
 import Blog from '../Pages/Blog'
+import Message from '../Pages/Message'
 
 function AppRouters() {
   return (
@@ -50,6 +51,7 @@ function AppRouters() {
       <Route path='/posts/:tags' element={<Tags/>}/>
        <Route path='/collections'element={<Collections/>}/>
        <Route path='/blog' element={<Blog/>}/>
+       <Route path='/messages' element={<Message/>}/>
         </Route>
     </Routes>
 

@@ -41,7 +41,7 @@ const ContactModal = ({ isOpen, onClose, user }) => {
         setIsSubmitting(true);
 
         try {
-            // Replace with your actual API endpoint for sending messages
+            
             await axiosInstance.post('/messages/send', {
                 recipientId: user._id,
                 projectDetails,
