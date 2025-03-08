@@ -21,8 +21,8 @@ userRouter
 .put('/user/:id/follow', verifyToken, follow)
 .put('/user/:id/unfollow', verifyToken, unfollow)
 .get('/users/:username',verifyToken,getUserByUsername)
-.get('/inbox', getInbox)
-.get('/archive', getArchive)
-.post('/', sendMessage)
+.get('/inbox',verifyToken, getInbox)
+.get('/archive',verifyToken, getArchive)
+.post('/', verifyToken,sendMessage)
 
 export default userRouter
