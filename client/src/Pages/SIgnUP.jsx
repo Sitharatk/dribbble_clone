@@ -54,10 +54,27 @@ function SIgnUP() {
       alert("Account created successfully!");
       navigate("/get_started");
     } catch (error) {
-      if (error.status === 400 && error.data?.message === "Email already registered") {
-        setErrors((prevErrors) => ({ ...prevErrors, email: "This email is already registered.", }));
+      let errorMessage = "Something went wrong. Please try again.";
+  
+      // Handle different error messages
+      if (error.response?.data?.message) {  // If using Axios
+        errorMessage = error.response.data.message;
+      } else if (error.data?.message) {  // If using fetch API with custom context
+        errorMessage = error.data.message;
+      }
+  
+      if (errorMessage === "Email already registered") {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          email: "This email is already registered.",
+        }));
+      } else if (errorMessage === "Username already taken") {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          username: "This username is already taken.",
+        }));
       } else {
-        alert(error.data?.message);
+        alert(errorMessage);  // Now this will show the actual error from backend
       }
     }
   };
