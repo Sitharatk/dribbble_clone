@@ -23,7 +23,14 @@ const userSchema = new mongoose.Schema({
         ref: 'Shot',
         default: []
     }],
-    
+    unreadMessages: {
+        type: Number,
+        default: 0
+      },
+      lastMessageAt: {
+        type: Date,
+        default: null
+      },
     createdAt: { type: Date, default: Date.now },
 }, {
    
