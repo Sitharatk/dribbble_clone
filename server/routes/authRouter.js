@@ -5,7 +5,7 @@ import upload from '../middleware/multer.js'
 import { deleteShot, getShots, uploadShot } from '../controllers/shotController.js'
 import { verifyToken } from '../middleware/verifyToken.js'
 import { follow, unfollow } from '../controllers/followController.js'
-
+import { getInbox, getArchive, sendMessage } from '../controllers/messageController.js'
 
 const userRouter=express.Router()
 userRouter
@@ -21,6 +21,8 @@ userRouter
 .put('/user/:id/follow', verifyToken, follow)
 .put('/user/:id/unfollow', verifyToken, unfollow)
 .get('/users/:username',verifyToken,getUserByUsername)
-
+.get('/inbox', getInbox)
+.get('/archive', getArchive)
+.post('/', sendMessage)
 
 export default userRouter
