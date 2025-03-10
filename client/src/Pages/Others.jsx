@@ -21,9 +21,7 @@ function Others() {
   const [isFollowing, setIsFollowing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-  const [isProfileLoading, setIsProfileLoading] = useState(true);
 
-  
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
