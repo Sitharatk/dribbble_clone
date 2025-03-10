@@ -21,7 +21,9 @@ function Others() {
   const [isFollowing, setIsFollowing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isProfileLoading, setIsProfileLoading] = useState(true);
 
+  
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
@@ -138,9 +140,9 @@ const closeContactModal = () => {
         <h1 className="text-2xl font-semibold mt-1">{userProfile.name}</h1>
         {/* Display their posts */}
         <div className="flex space-x-8 mt-2 text-gray-600">
-            <p>{userProfile1.followers ?.length ||0} followers</p>
-            <p>{userProfile1.following?.length || 0} following</p>
-            <p>{userProfile1.totalLikesReceived || 0} likes</p>
+            <p>{userProfile1?.followers ?.length ||0} followers</p>
+            <p>{userProfile1?.following?.length || 0} following</p>
+            <p>{userProfile1?.totalLikesReceived || 0} likes</p>
         </div>
         <div className="flex space-x-4 mt-4 items-center">
   <button        onClick={openContactModal} className="px-6 text-sm py-3 font-semibold rounded-full bg-black text-white">
