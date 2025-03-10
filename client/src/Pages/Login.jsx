@@ -81,7 +81,7 @@ if (!password.trim()) {
           <form className="space-y-4 mt-9" onSubmit={handleSubmit}>
             <div>
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-600">Username or Email</label>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-600">Email</label>
                 <input
                   type="text"
                   id="email"

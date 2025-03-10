@@ -27,7 +27,7 @@ function Home() {
     setIsEnd(swiper.isEnd);
   };
 
-  const filteredShots = authData ? allShots.filter(shot => shot.user._id !== authData.id) : allShots;
+  const filteredShots = authData ? allShots.filter(shot => shot.user?._id !== authData.id) : allShots;
   const tags = ["Discover", "Animation", "Branding", "Illustration", "Mobile", "Print", "Product Design", "Typography", "Web Design"];
 
   return (

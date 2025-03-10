@@ -26,7 +26,7 @@ const ShotDetail = () => {
     if (authData?.following && shot?.user?._id) {
         console.log('Current following list:', authData.following);
         console.log('Shot user ID:', shot.user._id);
-        const followingStatus = authData.following.includes(shot.user._id);
+        const followingStatus = authData.following.includes(shot.user?._id);
         console.log('Following status:', followingStatus);
         setIsFollowing(followingStatus);
     }
@@ -38,10 +38,10 @@ const handleFollowToggle = async () => {
   setIsLoading(true);
   try {
       if (isFollowing) {
-          await unfollowUser(shot.user._id);
+          await unfollowUser(shot?.user?._id);
           console.log('Unfollow successful');
       } else {
-          await followUser(shot.user._id);
+          await followUser(shot?.user?._id);
           console.log('Follow successful');
       }
       setIsFollowing(!isFollowing);
@@ -104,17 +104,17 @@ const closeContactModal = () => {
         <h1 className="text-2xl font-semibold text-gray-900">{shot.title}</h1>
         <div className="py-4 flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <Link to={`/${shot.user.username}`}>
+            <Link to={`/${shot?.user?.username}`}>
               <img
-                src={shot.user.profilePicture}
-                alt={shot.user?.name || "User"}
+                src={shot?.user?.profilePicture}
+                alt={shot?.user?.name || "User"}
                 className="w-12 h-12 rounded-full object-cover"
               />
             </Link>
             <div>
-              <Link to={`/${shot.user.username}`}>
+              <Link to={`/${shot?.user?.username}`}>
                 <p className="text-sm font-semibold text-gray-900">
-                  {shot.user?.name || "Anonymous"}
+                  {shot?.user?.name || "Anonymous"}
                 </p>
               </Link>
               {!currentUserShot && (
@@ -192,7 +192,7 @@ const closeContactModal = () => {
 
     {currentUserShot &&( <div className="flex justify-center space-x-2 py-4">
           <Link
-            to={`/editshot/${shot._id}`}
+            to={`/editshot/${shot?._id}`}
             className="w-32 h-16 bg-slate-100 rounded-l-lg inline-block text-center leading-[4rem]"
           >
             Edit
@@ -212,7 +212,7 @@ const closeContactModal = () => {
           <hr className="flex-1 border-t-2 border-gray-200 mt-14" />
           <span className="mx-4 text-gray-500 mt-14">
             <img
-              src={shot.user.profilePicture}
+              src={shot.user?.profilePicture}
               alt={shot.user?.name || "User"}
               className="w-16 h-16 rounded-full object-cover"
             />
