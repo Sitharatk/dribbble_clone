@@ -51,7 +51,7 @@ if (profile) {
   useEffect(() => {
     if (authData && userProfile && authData.following) {
         // Check if the current user is following the profile user
-        const isAlreadyFollowing = authData.following.includes(userProfile._id);
+        const isAlreadyFollowing = authData.following.includes(userProfile?._id);
         setIsFollowing(isAlreadyFollowing);
     }
 }, [authData, userProfile]);
