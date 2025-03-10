@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 
 function Message() {
   const [activeTab, setActiveTab] = useState('inbox');
@@ -13,7 +13,7 @@ function Message() {
       </div>
 
       {/* Inbox/Archive Tabs */}
-      <div className="flex mb-8">
+      <div className="flex mb-10">
         <button 
           onClick={() => setActiveTab('inbox')}
           className={`px-6 py-2 rounded-full mr-2 ${
