@@ -6,14 +6,50 @@ import ContactModal from "../Pages/ContactModal";
 
 const ShotDetail = () => {
   const { id } = useParams();
-  const { loading, deleteShot, allShots } = useContext(ShotContext);
+  const { loading, deleteShot, allShots, likeShot, unlikeShot } = useContext(ShotContext);
   const { authData, followUser, unfollowUser } = useContext(AuthContext);
   const [isFollowing, setIsFollowing] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [relatedShots, setRelatedShots] = useState([]);
+  const userId = authData?.id || null;
 
   const shot = allShots && id ? allShots.find((s) => s._id === id) : null;
   const navigate = useNavigate();
+
+  // Add this function to fix the error
+  const handleLinkClick = (e) => {
+    if (!e.target.closest('button') && !e.target.closest('svg')) {
+      return true;
+    }
+    e.preventDefault();
+  };
+
+  // Add this function for like functionality
+  const handleLikeToggle = async (shotId, currentLikes = []) => {
+    if (!userId) {
+      console.error('User not authenticated');
+      return;
+    }
+
+    try {
+      if (currentLikes.includes(userId)) {
+        const response = await unlikeShot(shotId);
+        // Only update state if server operation was successful
+        if (response.message === 'Like deleted successfully') {
+          return true;
+        }
+      } else {
+        const response = await likeShot(shotId);
+        if (response.success) {
+          return true;
+        }
+      }
+      return false;
+    } catch (error) {
+      console.error('Like action failed', error);
+      return false;
+    }
+  };
 
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this shot?')) {
@@ -32,48 +68,46 @@ const ShotDetail = () => {
         console.log('Following status:', followingStatus);
         setIsFollowing(followingStatus);
     }
-}, [authData?.following, shot?.user?._id]);
+  }, [authData?.following, shot?.user?._id]);
 
-useEffect(() => {
-  if (shot?.user?._id && allShots) {
-    
-    const shotsByUser = allShots.filter(
-      s => s.user?._id === shot.user._id && s._id !== shot._id
-    );
-    setRelatedShots(shotsByUser);
-  }
-}, [shot, allShots]);
+  useEffect(() => {
+    if (shot?.user?._id && allShots) {
+      const shotsByUser = allShots.filter(
+        s => s.user?._id === shot.user._id && s._id !== shot._id
+      );
+      setRelatedShots(shotsByUser);
+    }
+  }, [shot, allShots]);
 
-const handleFollowToggle = async () => {
-  if (!shot?.user?._id) return;
+  const handleFollowToggle = async () => {
+    if (!shot?.user?._id) return;
 
-  setIsLoading(true);
-  try {
-      if (isFollowing) {
-          await unfollowUser(shot?.user?._id);
-          console.log('Unfollow successful');
-      } else {
-          await followUser(shot?.user?._id);
-          console.log('Follow successful');
-      }
-      setIsFollowing(!isFollowing);
-  } catch (error) {
-      console.error('Error toggling follow:', error);
-      // Revert the following state if the API call fails
-      setIsFollowing(isFollowing);
-  } finally {
-      setIsLoading(false);
-  }
-};
+    setIsLoading(true);
+    try {
+        if (isFollowing) {
+            await unfollowUser(shot?.user?._id);
+            console.log('Unfollow successful');
+        } else {
+            await followUser(shot?.user?._id);
+            console.log('Follow successful');
+        }
+        setIsFollowing(!isFollowing);
+    } catch (error) {
+        console.error('Error toggling follow:', error);
+        // Revert the following state if the API call fails
+        setIsFollowing(isFollowing);
+    } finally {
+        setIsLoading(false);
+    }
+  };
 
-const openContactModal = () => {
-  setIsContactModalOpen(true);
-};
+  const openContactModal = () => {
+    setIsContactModalOpen(true);
+  };
 
-
-const closeContactModal = () => {
-  setIsContactModalOpen(false);
-};
+  const closeContactModal = () => {
+    setIsContactModalOpen(false);
+  };
 
   if (loading) {
     return (
@@ -244,40 +278,85 @@ const closeContactModal = () => {
 )}
 <div>        {!currentUserShot && shot.user && (
           <div className="pb-16">
-            <p className="font-bold text-xl mb-6">More by {shot.user.name}</p>
-            
-            {/* Related shots grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-              {relatedShots.length > 0 ? (
-                relatedShots.map((relatedShot) => (
-                  <div key={relatedShot._id} className="group relative">
-                    <Link to={`/shots/${relatedShot._id}`}>
-                      <div className="relative overflow-hidden rounded-lg shadow-md">
-                        <img 
-                          src={relatedShot.image} 
-                          alt={relatedShot.title}
-                          className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300">
-                          <div className="absolute bottom-3 left-3 right-3 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <h3 className="text-sm font-semibold text-white">{relatedShot.title}</h3>
-                            <div className="flex items-center space-x-2">
-                              <span className="text-white text-xs">{relatedShot.likes?.length || 0}</span>
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="white">
-                                <path d="M10.7408 2C13.0889 2 14.6667 4.235 14.6667 6.32C14.6667 10.5425 8.11856 14 8.00004 14C7.88152 14 1.33337 10.5425 1.33337 6.32C1.33337 4.235 2.91115 2 5.2593 2C6.60745 2 7.48893 2.6825 8.00004 3.2825C8.51115 2.6825 9.39263 2 10.7408 2Z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                              </svg>
-                            </div>
-                          </div>
+  <p className="font-bold text-xl mb-6">More by {shot.user.name}</p>
+  
+  {/* Related shots grid */}
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    {relatedShots.length > 0 ? (
+      relatedShots.map((relatedShot) => (
+        <div key={relatedShot._id} className="w-full">
+          <div className="flex flex-col space-y-4">
+            <Link to={`/shots/${relatedShot._id}`} onClick={handleLinkClick}>
+              <div className="group relative bg-white rounded-lg shadow-md overflow-hidden">
+                <div className="relative">
+                  <img
+                    src={relatedShot.image}
+                    alt={relatedShot.title}
+                    className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+
+                  {/* Hover overlay with name and like */}
+                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300">
+                    <div className="absolute bottom-3 left-3 right-3 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <h3 className="text-sm font-semibold text-white truncate pr-2">
+                        {relatedShot.title}
+                      </h3>
+                      {userId && (
+                        <div className="flex space-x-2">
+                          {/* Collection button */}
+                          <button className="p-2 rounded-full bg-white text-gray-500 hover:bg-opacity-90 transition-colors duration-200">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-4 w-4"
+                              viewBox="0 0 16 16"
+                              fill="none"
+                              role="img"
+                            >
+                              <path
+                                d="M3.33337 5.2C3.33337 4.0799 3.33337 3.51984 3.55136 3.09202C3.74311 2.71569 4.04907 2.40973 4.42539 2.21799C4.85322 2 5.41327 2 6.53337 2H9.46671C10.5868 2 11.1469 2 11.5747 2.21799C11.951 2.40973 12.257 2.71569 12.4487 3.09202C12.6667 3.51984 12.6667 4.0799 12.6667 5.2V14L8.00004 11.3333L3.33337 14V5.2Z"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
+                          </button>
+
+                          <button 
+                            onClick={() => handleLikeToggle(relatedShot._id, relatedShot.likes || [])} 
+                            className={`p-2 rounded-full bg-white text-gray-600 hover:bg-opacity-90 transition-colors duration-200 ${userId && relatedShot.likes?.includes(userId) ? 'text-fuchsia-400' : ''}`}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-4 w-4"
+                              viewBox="0 0 16 16"
+                              fill={userId && relatedShot.likes?.includes(userId) ? 'currentColor' : 'none'}
+                              role="img"
+                            >
+                              <path
+                                d="M10.7408 2C13.0889 2 14.6667 4.235 14.6667 6.32C14.6667 10.5425 8.11856 14 8.00004 14C7.88152 14 1.33337 10.5425 1.33337 6.32C1.33337 4.235 2.91115 2 5.2593 2C6.60745 2 7.48893 2.6825 8.00004 3.2825C8.51115 2.6825 9.39263 2 10.7408 2Z"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
+                          </button>
                         </div>
-                      </div>
-                    </Link>
+                      )}
+                    </div>
                   </div>
-                ))
-              ) : (
-                <p className="col-span-3 text-center text-gray-500">No other shots from this user</p>
-              )}
-            </div>
+                </div>
+              </div>
+            </Link>
           </div>
+        </div>
+      ))
+    ) : (
+      <p className="col-span-3 text-center text-gray-500">No other shots from this user</p>
+    )}
+  </div>
+</div>
         )}
 
       </div>
