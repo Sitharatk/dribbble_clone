@@ -10,6 +10,8 @@ const ShotDetail = () => {
   const { authData, followUser, unfollowUser } = useContext(AuthContext);
   const [isFollowing, setIsFollowing] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [relatedShots, setRelatedShots] = useState([]);
+
   const shot = allShots && id ? allShots.find((s) => s._id === id) : null;
   const navigate = useNavigate();
 
@@ -31,6 +33,16 @@ const ShotDetail = () => {
         setIsFollowing(followingStatus);
     }
 }, [authData?.following, shot?.user?._id]);
+
+useEffect(() => {
+  if (shot?.user?._id && allShots) {
+    
+    const shotsByUser = allShots.filter(
+      s => s.user?._id === shot.user._id && s._id !== shot._id
+    );
+    setRelatedShots(shotsByUser);
+  }
+}, [shot, allShots]);
 
 const handleFollowToggle = async () => {
   if (!shot?.user?._id) return;
@@ -230,9 +242,44 @@ const closeContactModal = () => {
    </button>
  </div>
 )}
-<div>{!currentUserShot && 
-        <p className="font-bold">More by {shot.user.name}</p>
-}
+<div>        {!currentUserShot && shot.user && (
+          <div className="pb-16">
+            <p className="font-bold text-xl mb-6">More by {shot.user.name}</p>
+            
+            {/* Related shots grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              {relatedShots.length > 0 ? (
+                relatedShots.map((relatedShot) => (
+                  <div key={relatedShot._id} className="group relative">
+                    <Link to={`/shots/${relatedShot._id}`}>
+                      <div className="relative overflow-hidden rounded-lg shadow-md">
+                        <img 
+                          src={relatedShot.image} 
+                          alt={relatedShot.title}
+                          className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300">
+                          <div className="absolute bottom-3 left-3 right-3 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <h3 className="text-sm font-semibold text-white">{relatedShot.title}</h3>
+                            <div className="flex items-center space-x-2">
+                              <span className="text-white text-xs">{relatedShot.likes?.length || 0}</span>
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="white">
+                                <path d="M10.7408 2C13.0889 2 14.6667 4.235 14.6667 6.32C14.6667 10.5425 8.11856 14 8.00004 14C7.88152 14 1.33337 10.5425 1.33337 6.32C1.33337 4.235 2.91115 2 5.2593 2C6.60745 2 7.48893 2.6825 8.00004 3.2825C8.51115 2.6825 9.39263 2 10.7408 2Z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+                ))
+              ) : (
+                <p className="col-span-3 text-center text-gray-500">No other shots from this user</p>
+              )}
+            </div>
+          </div>
+        )}
+
       </div>
       </div>
       {shot.user && (
