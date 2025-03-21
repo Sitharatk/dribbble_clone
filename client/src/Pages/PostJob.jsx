@@ -9,7 +9,7 @@ function PostJob() {
           The #1 job board for hiring designers and creative professionals.
         </h3> 
 
-        {/* Job Details Section */}
+
         <div className="flex flex-col p-5 md:p-10 border bg-white rounded-xl mt-4 md:mt-7 shadow-lg">
           <div>
             <h1 className="text-xl md:text-[23px] text-black font-bold">
@@ -17,7 +17,7 @@ function PostJob() {
             </h1>
           </div>
           <div className="space-y-4 md:space-y-6 mt-4">
-            {/* Job Title */}
+
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 Job Title *
@@ -29,7 +29,7 @@ function PostJob() {
               />
             </div>
 
-            {/* Job Description */}
+
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 Job Description *
@@ -41,7 +41,7 @@ function PostJob() {
               ></textarea>
             </div>
 
-            {/* Job Location */}
+
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 Job Location *
@@ -53,7 +53,7 @@ function PostJob() {
               />
             </div>
 
-            {/* Workplace Type */}
+   
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 Workplace Type *
@@ -68,7 +68,7 @@ function PostJob() {
               </select>
             </div>
 
-            {/* Employment Type */}
+         
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 Employment Type *
@@ -84,7 +84,6 @@ function PostJob() {
               </select>
             </div>
 
-            {/* Application Link */}
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 Where can people apply? *
@@ -98,13 +97,13 @@ function PostJob() {
           </div>
         </div>
 
-        {/* Company Information Section */}
+
         <div className="flex flex-col p-5 md:p-10 border bg-white rounded-xl mt-4 md:mt-7 shadow-lg">
           <h1 className="text-[15px] text-gray-500 font-bold">
             COMPANY INFORMATION
           </h1>
           <div className="space-y-4 mt-4">
-            {/* Company Name */}
+         
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 What&apos;s your company name? *
@@ -116,7 +115,7 @@ function PostJob() {
               />
             </div>
 
-            {/* Company Logo */}
+      
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 Your company logo *
@@ -126,7 +125,7 @@ function PostJob() {
               </button>
             </div>
 
-            {/* Company Website */}
+      
             <div>
               <label className="block text-sm font-medium text-gray-700">
                 Your company website *
@@ -134,13 +133,12 @@ function PostJob() {
               <input
                 type="text"
                 placeholder="Enter company website"
-                className="mt-1 block w-full p-2 border rounded-md focus:ring-pink-500 focus:border-pink-500"
+                className="mt-1 block w-full p-2 border rounded-md focus:ring-pink-500 focus:border-pink-600"
               />
             </div>
           </div>
         </div>
 
-        {/* Action Buttons */}
         <div className="flex flex-col md:flex-row md:justify-end mt-6 space-y-3 md:space-y-0 md:space-x-3 mb-6">
           <button className="w-full md:w-auto py-2 px-6 bg-white border text-black rounded-full hover:bg-gray-400 transition">
             Cancel

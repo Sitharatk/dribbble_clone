@@ -10,7 +10,7 @@ function Likes() {
   
     // Filter shots that the user has liked
     const likedShots = allShots.filter((shot) => shot.likes.includes(authData?.id));
-    console.log('likedShots',likedShots)
+  
   return (
     <>
     <UserDetails/>
