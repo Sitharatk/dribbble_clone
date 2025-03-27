@@ -151,3 +151,49 @@ export const getUserByUsername = async (req, res) => {
     });
   }
 };
+
+
+
+export const blockUser = async (req, res) => {
+  const { id } = req.params;
+  const { block } = req.body;
+
+  try {
+    const user = await userModel.findById(id);
+    const currentUser = await userModel.findById(req.user.id);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (block) {
+      // Block the user
+      if (!currentUser.blockedUsers.includes(id)) {
+        currentUser.blockedUsers.push(id);
+        await currentUser.save();
+      }
+      // Remove from current user's following
+      currentUser.following = currentUser.following.filter(followingId => 
+        followingId.toString() !== id.toString()
+      );
+      await currentUser.save();
+    } else {
+      // Unblock the user
+      currentUser.blockedUsers = currentUser.blockedUsers.filter(blockedUserId => 
+        blockedUserId.toString() !== id.toString()
+      );
+      await currentUser.save();
+    }
+
+    res.status(200).json({
+      message: block ? 'User blocked successfully' : 'User unblocked successfully',
+      user: currentUser // Return updated current user
+    });
+  } catch (error) {
+    console.error('Error blocking/unblocking user:', error);
+    res.status(500).json({
+      message: 'Error blocking/unblocking user',
+      error: error.message
+    });
+  }
+    }

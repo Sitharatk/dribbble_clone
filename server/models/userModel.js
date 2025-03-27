@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
         ref: 'User',
         default: []
     }],
+    blockedUsers: [{ 
+        type: mongoose.Schema.Types.ObjectId,
+         ref: 'User'
+         }],
     likedShots: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Shot',
