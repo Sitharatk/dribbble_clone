@@ -154,13 +154,15 @@ export const getUserByUsername = async (req, res) => {
 
 
 
+// In blockController.js
 export const blockUser = async (req, res) => {
   const { id } = req.params;
   const { block } = req.body;
 
   try {
     const user = await userModel.findById(id);
-    const currentUser = await userModel.findById(req.user.id);
+    const currentUser = await userModel.findById(req.user.id)
+      .populate('blockedUsers', 'name username profilePicture');
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
@@ -168,26 +170,27 @@ export const blockUser = async (req, res) => {
 
     if (block) {
       // Block the user
-      if (!currentUser.blockedUsers.includes(id)) {
+      if (!currentUser.blockedUsers.some(blockedUser => 
+        blockedUser._id.toString() === id.toString())) {
         currentUser.blockedUsers.push(id);
-        await currentUser.save();
       }
+      
       // Remove from current user's following
       currentUser.following = currentUser.following.filter(followingId => 
         followingId.toString() !== id.toString()
       );
-      await currentUser.save();
     } else {
       // Unblock the user
       currentUser.blockedUsers = currentUser.blockedUsers.filter(blockedUserId => 
         blockedUserId.toString() !== id.toString()
       );
-      await currentUser.save();
     }
+
+    await currentUser.save();
 
     res.status(200).json({
       message: block ? 'User blocked successfully' : 'User unblocked successfully',
-      user: currentUser // Return updated current user
+      user: currentUser
     });
   } catch (error) {
     console.error('Error blocking/unblocking user:', error);
@@ -196,4 +199,4 @@ export const blockUser = async (req, res) => {
       error: error.message
     });
   }
-    }
+};

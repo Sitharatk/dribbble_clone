@@ -11,7 +11,7 @@ import ContactModal from "../Pages/ContactModal";
 function Others() {
     const { username } = useParams(); 
     const{allShots}=useContext(ShotContext)
-    const {authData,unfollowUser,followUser}=useContext(AuthContext)
+    const {authData,unfollowUser,followUser,blockUser}=useContext(AuthContext)
    
       // State to store the user's profile data and posts
   const [userProfile, setUserProfile] = useState(null);
@@ -21,6 +21,7 @@ function Others() {
   const [isFollowing, setIsFollowing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isBlocked, setIsBlocked] = useState(false);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -56,6 +57,16 @@ if (profile) {
     }
 }, [authData, userProfile]);
 
+useEffect(() => {
+  if (authData && userProfile) {
+      const isCurrentlyBlocked = authData.blockedUsers?.some(
+          blockedUser => blockedUser?._id === userProfile._id
+      );
+      setIsBlocked(isCurrentlyBlocked);
+  }
+}, [authData, userProfile]);
+
+
 const handleFollowToggle = async () => {
   if (!authData) return; // Not logged in
   if (!userProfile) return; // No profile loaded
@@ -87,6 +98,25 @@ const handleFollowToggle = async () => {
   }
 };
 
+const handleBlockToggle = async () => {
+  if (!authData || !userProfile) return;
+  
+  setIsLoading(true);
+  
+  try {
+      const response = await axiosInstance.put(`/auth/block/${userProfile._id}`, { 
+          block: !isBlocked 
+      });
+      
+     
+      setIsBlocked(!isBlocked);
+  } catch (error) {
+      console.error("Error blocking/unblocking user:", error);
+      // Optionally show an error message to the user
+  } finally {
+      setIsLoading(false);
+  }
+};
 
   useEffect(() => {
     let dropdownTimeout;
@@ -94,7 +124,7 @@ const handleFollowToggle = async () => {
     if (isDropdownOpen) {
       dropdownTimeout = setTimeout(() => {
         setIsDropdownOpen(false);
-      }, 1500); 
+      }, 2000); 
     }
   
     return () => {
@@ -169,9 +199,16 @@ const closeContactModal = () => {
           <li className="hover:text-gray-600 cursor-pointer">
             Add or remove from lists...
           </li>
-          <li className="hover:text-gray-600 cursor-pointer">
-            Block {userProfile.name}
-          </li>
+          {authData && authData._id !== userProfile._id && (
+                                            <li 
+                                                onClick={handleBlockToggle}
+                                                className="hover:text-gray-600 cursor-pointer"
+                                            >
+                                                {isBlocked 
+                                                    ? `Unblock ${userProfile.name}` 
+                                                    : `Block ${userProfile.name}`}
+                                            </li>
+                                        )}
           <li className="hover:text-gray-600 cursor-pointer">
             Report {userProfile.name}
           </li>

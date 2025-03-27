@@ -133,8 +133,18 @@ function AuthProvider({ children }) {
     }
 };
   
+const blockUser = async (userId, shouldBlock) => {
+  try {
+    const response = await axiosInstance.put(`/auth/block/${userId}`, { block: shouldBlock });
+    // Update authData or trigger a refresh of user data
+    return response.data;
+  } catch (error) {
+    console.error('Error blocking/unblocking user:', error);
+    throw error;
+  }
+};
   return (
-    <AuthContext.Provider value={{ authData, login, register, logout ,setAuthData,followUser,unfollowUser,  isAuthenticated: !!authData}}>
+    <AuthContext.Provider value={{ authData, login, register, logout ,setAuthData,followUser,unfollowUser,  isAuthenticated: !!authData,blockUser}}>
       {children}
     </AuthContext.Provider>
   );

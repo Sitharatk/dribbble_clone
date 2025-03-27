@@ -1,6 +1,6 @@
 import express from 'express'
 import { loginUser, refreshAccessToken, registerUser } from '../controllers/authController.js'
-import { profileUpdate, updateExistingProfile, deleteAvatar, getUserByUsername} from '../controllers/userController.js'
+import { profileUpdate, updateExistingProfile, deleteAvatar, blockUser, getUserByUsername} from '../controllers/userController.js'
 import upload from '../middleware/multer.js'
 import { deleteShot, getShots, uploadShot } from '../controllers/shotController.js'
 import { verifyToken } from '../middleware/verifyToken.js'
@@ -24,5 +24,6 @@ userRouter
 .get('/inbox',verifyToken, getInbox)
 .get('/archive',verifyToken, getArchive)
 .post('/', verifyToken,sendMessage)
+.put('/block/:id', verifyToken, blockUser) 
 
 export default userRouter
