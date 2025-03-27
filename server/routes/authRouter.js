@@ -1,6 +1,6 @@
 import express from 'express'
 import { loginUser, refreshAccessToken, registerUser } from '../controllers/authController.js'
-import { profileUpdate, updateExistingProfile, deleteAvatar, blockUser, getUserByUsername} from '../controllers/userController.js'
+import { profileUpdate, updateExistingProfile, deleteAvatar, blockUser, getUserByUsername,reportUser} from '../controllers/userController.js'
 import upload from '../middleware/multer.js'
 import { deleteShot, getShots, uploadShot } from '../controllers/shotController.js'
 import { verifyToken } from '../middleware/verifyToken.js'
@@ -25,5 +25,6 @@ userRouter
 .get('/archive',verifyToken, getArchive)
 .post('/', verifyToken,sendMessage)
 .put('/block/:id', verifyToken, blockUser) 
+.post('/report-user', verifyToken, reportUser)
 
 export default userRouter

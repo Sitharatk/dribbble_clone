@@ -22,6 +22,7 @@ function Others() {
   const [isLoading, setIsLoading] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isBlocked, setIsBlocked] = useState(false);
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -196,9 +197,9 @@ const closeContactModal = () => {
     {isDropdownOpen && (
       <div className="absolute left-0 top-full mt-4 p-2 w-60 text-sm bg-white shadow-xl rounded-md z-10 border border-gray-200">
         <ul className="flex flex-col space-y-4 p-2 text-gray-500">
-          <li className="hover:text-gray-600 cursor-pointer">
+          {/* <li className="hover:text-gray-600 cursor-pointer">
             Add or remove from lists...
-          </li>
+          </li> */}
           {authData && authData._id !== userProfile._id && (
                                             <li 
                                                 onClick={handleBlockToggle}
@@ -209,9 +210,12 @@ const closeContactModal = () => {
                                                     : `Block ${userProfile.name}`}
                                             </li>
                                         )}
-          <li className="hover:text-gray-600 cursor-pointer">
-            Report {userProfile.name}
-          </li>
+            <li 
+                onClick={() => setIsReportModalOpen(true)}
+                className="hover:text-gray-600 cursor-pointer"
+            >
+                Report {userProfile.name}
+            </li>
         </ul>
       </div>
     )}
@@ -280,6 +284,7 @@ const closeContactModal = () => {
     ) : (
       <p>Loading user profile..</p>
     )}
+    
   </div>
 );
 }

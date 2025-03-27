@@ -200,3 +200,30 @@ export const blockUser = async (req, res) => {
     });
   }
 };
+
+export const reportUser = async (req, res) => {
+  const { reportedUserId, reason } = req.body;
+  const reporterId = req.user.id;
+
+  try {
+      const report = new ReportModel({
+          reporter: reporterId,
+          reportedUser: reportedUserId,
+          reason: reason,
+          status: 'pending'
+      });
+
+      await report.save();
+
+      res.status(200).json({ 
+          message: 'User reported successfully', 
+          reportId: report._id 
+      });
+  } catch (error) {
+      console.error('Error reporting user:', error);
+      res.status(500).json({ 
+          message: 'Failed to report user', 
+          error: error.message 
+      });
+  }
+};
