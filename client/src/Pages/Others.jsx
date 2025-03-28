@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { ShotContext } from "../Context/ShotContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
-
+import ReportUserModal from "./ReportUserModal";
 import axiosInstance from "../../utilities/axiosInstance";
 import { AuthContext  } from "../Context/AuthContext";
 import ContactModal from "../Pages/ContactModal";
@@ -118,6 +118,20 @@ const handleBlockToggle = async () => {
       setIsLoading(false);
   }
 };
+
+const handleReportSubmit = async (reason) => {
+  try {
+      await axiosInstance.post('/report-user', {
+          reportedUserId: userProfile._id,
+          reason: reason
+      });
+      // Optional: Show success message
+  } catch (error) {
+      console.error('Error reporting user:', error);
+      // Optional: Show error message
+  }
+};
+
 
   useEffect(() => {
     let dropdownTimeout;
@@ -280,6 +294,12 @@ const closeContactModal = () => {
                             user={userProfile}
                         />
                     )}
+                    <ReportUserModal 
+                user={userProfile}
+                isOpen={isReportModalOpen}
+                onClose={() => setIsReportModalOpen(false)}
+                onSubmit={handleReportSubmit}
+            />
       </div>
     ) : (
       <p>Loading user profile..</p>
