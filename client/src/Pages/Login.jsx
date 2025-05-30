@@ -4,6 +4,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../Context/AuthContext';	
 import { useNavigate } from 'react-router-dom';
+// import { signInWithPopup } from "firebase/auth";
+// import { auth, googleProvider } from "../firebase";
 
 function Login() {
   const { login } = useContext(AuthContext);
@@ -13,7 +15,19 @@ function Login() {
   const [passwordError, setPasswordError] = useState('');
 
   const navigate = useNavigate();
+// const handleGoogleSignIn = async () => {
+//   try {
+//     const result = await signInWithPopup(auth, googleProvider);
+//     const user = result.user;
+//     console.log("Google Sign-in success", user);
 
+//     navigate("/")
+//   } catch (error) {
+//     console.error("Google Sign-in error", error);
+//     alert("Failed to sign in with Google");
+//   }
+// };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setEmailError('');
@@ -67,8 +81,8 @@ if (!password.trim()) {
         <div>
           <h2 className="font-bold mt-3 text-3xl leading-[29px] font-[Mona Sans, Helvetica Neue, Helvetica, Arial, sans-serif]">Sign into Dribble</h2>
 
-          <button className="w-[410px] mt-10 h-14 font-semibold text-black py-2 rounded-full border flex items-center justify-center space-x-2">
-            <img src={google} className="w-5 h-5" alt="Google logo" />
+          {/* <button className="w-[410px] mt-10 h-14 font-semibold text-black py-2 rounded-full border flex items-center justify-center space-x-2">
+            <img onClick={handleGoogleSignIn}  src={google} className="w-5 h-5" alt="Google logo" />
             <span>Sign in with Google</span>
           </button>
 
@@ -76,7 +90,7 @@ if (!password.trim()) {
             <hr className="flex-1 border-t-1 border-gray-200" />
             <span className="text-gray-500">or Sign in with email</span>
             <hr className="flex-1 border-t-1 border-gray-200" />
-          </div>
+          </div> */}
 
           <form className="space-y-4 mt-9" onSubmit={handleSubmit}>
             <div>
