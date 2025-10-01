@@ -3,8 +3,7 @@ import UserDetails from "./UserDetails"
 function Collections() {
   return (
     <>
-        <UserDetails/>
-        
+      <UserDetails/>      
     </>
   )
 }
