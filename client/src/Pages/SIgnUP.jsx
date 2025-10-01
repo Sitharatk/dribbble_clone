@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from "../firebase";
+// import { signInWithPopup } from "firebase/auth";
+// import { auth, googleProvider } from "../firebase";
 
 
 
@@ -24,19 +24,19 @@ function SIgnUP() {
   const handleContinueWithEmail = () => setIsEmailForm(true);
 
   const handleGoBack = () => setIsEmailForm(false);
-const handleGoogleSignIn = async () => {
-  try {
-    const result = await signInWithPopup(auth, googleProvider);
-    const user = result.user;
-    console.log("Google Sign-in success", user);
+// const handleGoogleSignIn = async () => {
+//   try {
+//     const result = await signInWithPopup(auth, googleProvider);
+//     const user = result.user;
+//     console.log("Google Sign-in success", user);
 
-    alert("account created successfully")
-    navigate("/get_started")
-  } catch (error) {
-    console.error("Google Sign-in error", error);
-    alert("Failed to sign in with Google");
-  }
-};
+//     alert("account created successfully")
+//     navigate("/get_started")
+//   } catch (error) {
+//     console.error("Google Sign-in error", error);
+//     alert("Failed to sign in with Google");
+//   }
+// };
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
@@ -127,16 +127,16 @@ const handleGoogleSignIn = async () => {
         Sign up to Dribbble
       </h2>
 
-      <button onClick={handleGoogleSignIn}  className="w-full max-w-[410px] mt-6 h-14 font-semibold bg-gray-900 py-2 rounded-full text-white flex items-center justify-center space-x-2">
+      {/* <button onClick={handleGoogleSignIn}  className="w-full max-w-[410px] mt-6 h-14 font-semibold bg-gray-900 py-2 rounded-full text-white flex items-center justify-center space-x-2">
         <img src={google} className="w-5 h-5" alt="Google logo" />
         <span>Sign up with Google</span>
-      </button>
+      </button> */}
 
-      <div className="flex items-center justify-center mt-6 w-full">
+      {/* <div className="flex items-center justify-center mt-6 w-full">
         <hr className="flex-1 border-t border-gray-200" />
         <span className="mx-4 text-gray-500">or</span>
         <hr className="flex-1 border-t border-gray-200" />
-      </div>
+      </div> */}
 
       <button onClick={handleContinueWithEmail} className="w-full max-w-[410px] mt-6 h-14 font-semibold bg-white py-2 rounded-full border flex items-center justify-center space-x-2">
         <span>Continue with email</span>
