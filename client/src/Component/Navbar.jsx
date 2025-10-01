@@ -211,7 +211,7 @@ function Navbar() {
                   <li className="px-4 py-2">
           <div className="relative">
             <button 
-              className="hover:text-gray-400 flex items-center space-x-4 text-lg font-bold w-full"
+              className="hover:text-gray-400 flex items-center space-x-4 text-lg font-bold w-full bg-white shadow-lg z-10 border-t border-gray-200"
               onClick={() => setIsMobileHireOpen(!isMobileHireOpen)}
             >
               <span>Hire a Designer</span>
